@@ -19,6 +19,7 @@
         <commons-lang.version>3.14.0</commons-lang.version>
         <mybatis-plus.version>3.5.7</mybatis-plus.version>
         <druid.version>1.2.20</druid.version>
+        <jbcrypt.version>0.4</jbcrypt.version>
     </properties>
     <dependencies>
         <!-- spring-boot-starter-web -->
@@ -49,6 +50,12 @@
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
             <version>${commons-lang.version}</version>
+        </dependency>
+        <!--jbcrypt-->
+        <dependency>
+            <groupId>org.mindrot</groupId>
+            <artifactId>jbcrypt</artifactId>
+            <version>${jbcrypt.version}</version>
         </dependency>
         <!--lombok-->
         <dependency>
