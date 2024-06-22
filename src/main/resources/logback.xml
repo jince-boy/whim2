@@ -4,7 +4,7 @@
     <property name="log.path" value="/home/logs/whim"/>
     <!-- 日志输出格式 -->
     <property name="log.pattern"
-              value="%blue(%d{yyyy-MM-dd HH:mm:ss.SSS}) %yellow([%thread]) %green(%-5level) %boldMagenta(%logger{20}) - %yellow([%method,%line]) %n %yellow([%X{requestId}]) - %cyan(%msg%n)) %n"/>
+              value="%blue(%d{yyyy-MM-dd HH:mm:ss.SSS}) %yellow([%thread]) %green(%-5level) %boldMagenta(%logger{20}) - %yellow([%method,%line]) %n %yellow([%X{traceId}]) - %cyan(%msg%n)) %n"/>
 
     <!-- 控制台输出 -->
     <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
