@@ -19,7 +19,19 @@ public class IPUtils {
      * @return IP地址
      */
     public static String getClientIpAddress() {
-        HttpServletRequest request = ServletUtils.getRequest();
+        return getClientIpAddress(null);
+    }
+
+    /**
+     * 获取客户端IP地址
+     *
+     * @param request HttpServletRequest
+     * @return IP地址
+     */
+    public static String getClientIpAddress(HttpServletRequest request) {
+        if (request == null) {
+            request = ServletUtils.getRequest();
+        }
         String ip = Objects.requireNonNull(request).getHeader("x-forwarded-for");
         if (ip == null || ip.isEmpty() || "unknown".equalsIgnoreCase(ip)) {
             ip = request.getHeader("Proxy-Client-IP");

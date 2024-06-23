@@ -1,5 +1,6 @@
 package com.whim.config;
 
+import com.whim.common.filter.RequestFilter;
 import com.whim.common.filter.TraceFilter;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
@@ -13,6 +14,22 @@ import org.springframework.core.Ordered;
  */
 @Configuration
 public class FilterConfig {
+    /**
+     * 全局请求过滤器
+     */
+    @Bean
+    public FilterRegistrationBean<RequestFilter> createRequestFilterRegistrationBean() {
+        FilterRegistrationBean<RequestFilter> registrationBean = new FilterRegistrationBean<>();
+        registrationBean.setFilter(new RequestFilter());
+        registrationBean.setName("RequestFilter");
+        registrationBean.addUrlPatterns("/*");
+        registrationBean.setOrder(Ordered.HIGHEST_PRECEDENCE + 1);
+        return registrationBean;
+    }
+
+    /**
+     * MDC链路追踪过滤器
+     */
     @Bean
     public FilterRegistrationBean<TraceFilter> createTraceFilterRegistrationBean() {
         FilterRegistrationBean<TraceFilter> registrationBean = new FilterRegistrationBean<>();
@@ -22,4 +39,5 @@ public class FilterConfig {
         registrationBean.setOrder(Ordered.HIGHEST_PRECEDENCE);
         return registrationBean;
     }
+
 }
