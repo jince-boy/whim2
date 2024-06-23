@@ -196,7 +196,7 @@ public class ServletUtils {
      * 将URL的参数值进行自定义编码
      *
      * @param value  参数值
-     * @param encode 自定义编码
+     * @param encode StandardCharsets 自定义编码
      * @return 编码后的参数值
      */
     public static String URLParamEncode(String value, Charset encode) {
@@ -217,7 +217,7 @@ public class ServletUtils {
      * 将URL编码后的参数值进行解码
      *
      * @param value  编码后的参数值
-     * @param encode 自定义编码
+     * @param encode StandardCharsets 自定义编码
      * @return 解码后的参数值
      */
     public static String URLParamDecode(String value, Charset encode) {
