@@ -143,8 +143,19 @@ public class Result<T> implements Serializable {
      * @param <T> 数据类型
      * @return Result<LinkedHashMap < String, String>>
      */
-    public static <T> Result<LinkedHashMap<String, String>> argumentError(LinkedHashMap<String, String> message) {
-        return new Result<LinkedHashMap<String, String>>(message).setResult(HttpStatus.BAD_REQUEST, false, "参数错误");
+    public static <T> Result<LinkedHashMap<String, String>> argumentError(LinkedHashMap<String, String> messages) {
+        return new Result<LinkedHashMap<String, String>>(messages).setResult(HttpStatus.BAD_REQUEST, false, "参数错误");
+    }
+
+    /**
+     * 参数异常
+     *
+     * @param message 消息
+     * @param <T>     数据类型
+     * @return Result<T>
+     */
+    public static <T> Result<T> argumentError(String message) {
+        return new Result<T>(null).setResult(HttpStatus.BAD_REQUEST, false, message);
     }
 
     /**
