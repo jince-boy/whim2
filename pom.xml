@@ -21,6 +21,7 @@
         <druid.version>1.2.20</druid.version>
         <jbcrypt.version>0.4</jbcrypt.version>
         <fastjson2.version>2.0.50</fastjson2.version>
+        <flyway.version>10.14.0</flyway.version>
     </properties>
     <dependencies>
         <!-- spring-boot-starter-web -->
@@ -45,6 +46,12 @@
             <groupId>com.alibaba</groupId>
             <artifactId>druid-spring-boot-3-starter</artifactId>
             <version>${druid.version}</version>
+        </dependency>
+        <!--flyway-mysql-->
+        <dependency>
+            <groupId>org.flywaydb</groupId>
+            <artifactId>flyway-mysql</artifactId>
+            <version>${flyway.version}</version>
         </dependency>
         <!--commons-lang-->
         <dependency>
