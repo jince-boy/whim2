@@ -8,7 +8,7 @@ import java.util.UUID;
  * date: 2024/6/21 下午11:24
  * description: Id生成工具类
  */
-public class IdUtils {
+public class IDUtils {
     private static final SecureRandom secureRandom = new SecureRandom();
 
     /**
