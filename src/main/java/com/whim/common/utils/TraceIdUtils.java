@@ -17,7 +17,7 @@ public class TraceIdUtils {
      * @return 一个新的Trace ID
      */
     public static String generateTraceId() {
-        return IdUtils.generateUUID();
+        return IDUtils.generateUUID();
     }
 
     /**
