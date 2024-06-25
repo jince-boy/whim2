@@ -5,18 +5,16 @@ import com.whim.mapper.SysUserMapper;
 import com.whim.pojo.entity.SysUser;
 import com.whim.service.ISysUserService;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
+import lombok.RequiredArgsConstructor;
 
 /**
- * @author Jince
- * date: 2024/6/24 下午10:57
- * description: 系统用户表(SysUser)服务实现类
+ * @author JinCe
+ * date: 2024-06-25 21:56:39
+ * description: 系统用户 SysUser 表服务实现类
  */
 @Service
+@RequiredArgsConstructor
 public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> implements ISysUserService {
-    @Override
-    public List<SysUser> getUsers() {
-        return this.list();
-    }
+
 }
+

@@ -12,17 +12,16 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import io.swagger.v3.oas.annotations.media.Schema;
 
 /**
- * 系统用户表(SysUser)实体类
- *
- * @author makejava
- * @since 2024-06-24 22:52:28
+ * @author JinCe
+ * date: 2024-06-25 21:56:38
+ * description: 系统用户 SysUser 实体类
  */
 @EqualsAndHashCode(callSuper = true)
 @Data
-@Schema(name = "系统用户表")
+@Schema(name = "系统用户")
 public class SysUser extends BaseEntity implements Serializable {
     @Serial
-    private static final long serialVersionUID = -69468093000478860L;
+    private static final long serialVersionUID = 666901151610515396L;
     /**
      * 主键
      */
