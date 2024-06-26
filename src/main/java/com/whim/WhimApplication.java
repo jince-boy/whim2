@@ -23,11 +23,8 @@ public class WhimApplication {
                        ------------------------------------------
                        本地地址: \thttp://localhost:{}
                        外部地址: \thttp://{}:{}
-                       文档地址: \thttp://{}:{}/doc.html
                        ------------------------------------------
                        """,
-                environment.getProperty("server.port"),
-                InetAddress.getLocalHost().getHostAddress(),
                 environment.getProperty("server.port"),
                 InetAddress.getLocalHost().getHostAddress(),
                 environment.getProperty("server.port")

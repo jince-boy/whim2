@@ -12,9 +12,6 @@ import java.util.List;
  */
 @Getter
 public enum ExcludePathConstants {
-    KNIFE4J_HTML_PATH("/doc.html", "knife4j文档地址"),
-    KNIFE4J_RESOURCE_PATH("/webjars/**", "knife4j资源地址"),
-    KNIFE4J_DOC_PATH("/v3/api-docs/**", "knife4j文档地址"),
     AUTH_CAPTCHA("/auth/captcha", "验证码"),
     AUTH_LOGIN("/auth/login", "用户登录"),
     FAVICON_PATH("/favicon.ico", "favicon.ico"),

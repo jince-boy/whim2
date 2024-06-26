@@ -8,10 +8,20 @@ import com.whim.common.exception.ServiceException;
 import com.whim.common.exception.UserNotFoundException;
 import com.whim.common.exception.UserPasswordNotMatchException;
 import com.whim.common.web.Result;
+import jakarta.validation.ConstraintViolation;
+import jakarta.validation.ConstraintViolationException;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.http.HttpStatus;
+import org.springframework.validation.BindException;
+import org.springframework.validation.FieldError;
+import org.springframework.web.HttpRequestMethodNotSupportedException;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @author jince
@@ -21,6 +31,47 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 @RestControllerAdvice
 @Slf4j
 public class GlobalExceptionHandler {
+    /**
+     * 请求方式错误
+     */
+    @ExceptionHandler(HttpRequestMethodNotSupportedException.class)
+    public Result<String> handleHttpRequestMethodNotSupportedException(HttpRequestMethodNotSupportedException e) {
+        log.error("不支持'{}'请求", e.getMethod());
+        return Result.error(HttpStatus.METHOD_NOT_ALLOWED, "请求方式错误");
+    }
+    /**
+     * 参数验证异常
+     */
+    @ExceptionHandler(BindException.class)
+    public Result<String> handleBindException(BindException exception) {
+        List<String> collect = exception.getBindingResult().getFieldErrors().stream()
+                .map(FieldError::getDefaultMessage)
+                .collect(Collectors.toList());
+        log.error(String.join("; ", collect));
+        return Result.error(StringUtils.join(collect, ";"));
+    }
+    /**
+     * 参数验证异常
+     */
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public Result<String> handleMethodArgumentNotValidException(MethodArgumentNotValidException exception) {
+        List<String> collect = exception.getFieldErrors().stream()
+                .map(FieldError::getDefaultMessage)
+                .collect(Collectors.toList());
+        log.error(String.join("; ", collect));
+        return Result.error(StringUtils.join(collect, ";"));
+    }
+    /**
+     * 参数验证异常
+     */
+    @ExceptionHandler(ConstraintViolationException.class)
+    public Result<String> handleConstraintViolationException(ConstraintViolationException exception) {
+        List<String> collect = exception.getConstraintViolations().stream()
+                .map(ConstraintViolation::getMessage)
+                .collect(Collectors.toList());
+        log.error(String.join("; ", collect));
+        return Result.error(StringUtils.join(collect, ";"));
+    }
     /**
      * 业务异常处理
      */

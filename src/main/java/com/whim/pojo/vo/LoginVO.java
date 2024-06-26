@@ -1,6 +1,5 @@
 package com.whim.pojo.vo;
 
-import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
@@ -11,10 +10,7 @@ import lombok.Data;
  */
 @Data
 @AllArgsConstructor
-@Schema(name = "登录实例")
 public class LoginVO {
-    @Schema(description = "token")
     private String token;
-    @Schema(description = "有效时间")
     private Long expires;
 }

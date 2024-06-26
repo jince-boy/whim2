@@ -3,7 +3,6 @@ package com.whim.common.core.base;
 import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.fasterxml.jackson.annotation.JsonFormat;
-import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.Setter;
 
@@ -24,11 +23,9 @@ public class BaseEntity implements Serializable {
     // 创建时间
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @TableField(fill = FieldFill.INSERT)
-    @Schema(description = "创建时间")
     private LocalDateTime createTime;
     // 修改时间
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @TableField(fill = FieldFill.UPDATE)
-    @Schema(description = "更新时间")
     private LocalDateTime updateTime;
 }

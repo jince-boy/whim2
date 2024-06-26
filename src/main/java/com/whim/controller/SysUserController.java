@@ -1,12 +1,10 @@
 package com.whim.controller;
 
-
 import com.whim.service.ISysUserService;
 import com.whim.common.core.base.BaseController;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import lombok.RequiredArgsConstructor;
-import io.swagger.v3.oas.annotations.tags.Tag;
 
 /**
  * @author JinCe
@@ -16,7 +14,6 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 @RestController
 @RequestMapping("/sysUser")
 @RequiredArgsConstructor
-@Tag(name = "SysUserController")
 public class SysUserController extends BaseController {
     /**
      * 服务对象

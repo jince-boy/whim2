@@ -9,7 +9,6 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.IdType;
-import io.swagger.v3.oas.annotations.media.Schema;
 
 /**
  * @author JinCe
@@ -18,7 +17,6 @@ import io.swagger.v3.oas.annotations.media.Schema;
  */
 @EqualsAndHashCode(callSuper = true)
 @Data
-@Schema(name = "系统角色")
 public class SysRole extends BaseEntity implements Serializable {
     @Serial
     private static final long serialVersionUID = -58615235008737989L;
@@ -27,26 +25,21 @@ public class SysRole extends BaseEntity implements Serializable {
      */
     @JsonFormat(shape = JsonFormat.Shape.STRING)
     @TableId(type = IdType.ASSIGN_ID)
-    @Schema(description = "主键")
     private Long id;
     /**
      * 角色名称
      */
-    @Schema(description = "角色名称")
     private String name;
     /**
      * 角色权限编码
      */
-    @Schema(description = "角色权限编码")
     private String code;
     /**
      * 角色描述
      */
-    @Schema(description = "角色描述")
     private String description;
     /**
      * 状态
      */
-    @Schema(description = "状态")
     private String status;
 }

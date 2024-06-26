@@ -1,7 +1,6 @@
 package com.whim.common.web;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import org.springframework.http.HttpStatus;
 
@@ -15,17 +14,12 @@ import java.util.LinkedHashMap;
  * description: Result统一响应工具类
  */
 @Data
-@Schema(name = "响应对象")
 public class Result<T> implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
-    @Schema(description = "状态码")
     private Integer code;
-    @Schema(description = "消息")
     private String message;
-    @Schema(description = "数据")
     private T data;
-    @Schema(description = "状态")
     private Boolean status;
 
     private Result(T data) {
