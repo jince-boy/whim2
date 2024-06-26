@@ -32,6 +32,13 @@ spring:
       test-on-return: false
       # 是否缓存preparedStatement, 也就是PSCache,PSCache对支持游标的数据库性能提升巨大，比如说oracle,在mysql下建议关闭
       pool-prepared-statements: false
+  # Redis
+  data:
+    redis:
+      host: ${REDIS_IP:127.0.0.1}
+      port: ${REDIS_PORT:6379}
+      password: ${REDIS_PASSWD:root}
+      database: ${REDIS_DB:0}
   # 数据库迁移
   flyway:
     enabled: true

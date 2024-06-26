@@ -1,7 +1,6 @@
 package com.whim.controller;
 
 import cn.dev33.satoken.annotation.SaIgnore;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.whim.common.core.base.BaseController;
 import com.whim.common.web.Result;
 import io.swagger.v3.oas.annotations.Operation;

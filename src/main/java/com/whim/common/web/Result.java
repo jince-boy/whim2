@@ -66,7 +66,7 @@ public class Result<T> implements Serializable {
      * @return Result<T>
      */
     public static <T> Result<T> success(String message, T data) {
-        return new Result<T>(data).setResult(HttpStatus.OK, true, message);
+        return new Result<>(data).setResult(HttpStatus.OK, true, message);
     }
 
     /**
@@ -138,7 +138,7 @@ public class Result<T> implements Serializable {
      * @return Result<T>
      */
     public static <T> Result<T> error(HttpStatus code, String message, T data) {
-        return new Result<T>(data).setResult(code, false, message);
+        return new Result<>(data).setResult(code, false, message);
     }
 
     /**
@@ -149,7 +149,7 @@ public class Result<T> implements Serializable {
      * @return Result<LinkedHashMap < String, String>>
      */
     public static <T> Result<LinkedHashMap<String, String>> argumentError(LinkedHashMap<String, String> messages) {
-        return new Result<LinkedHashMap<String, String>>(messages).setResult(HttpStatus.BAD_REQUEST, false, "参数错误");
+        return new Result<>(messages).setResult(HttpStatus.BAD_REQUEST, false, "参数错误");
     }
 
     /**
@@ -183,6 +183,6 @@ public class Result<T> implements Serializable {
      */
     public static <T> Result<RPage<T>> page(Page<T> page) {
         RPage<T> rPage = new RPage<>(page.getCurrent(), page.getRecords(), page.getPages(), page.getSize(), page.getTotal());
-        return new Result<RPage<T>>(rPage).setResult(HttpStatus.OK, true, "成功");
+        return new Result<>(rPage).setResult(HttpStatus.OK, true, "成功");
     }
 }

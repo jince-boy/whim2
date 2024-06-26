@@ -1,4 +1,4 @@
-package com.whim.common.utils;
+package com.whim.common.helper;
 
 import lombok.Getter;
 import org.springframework.aop.framework.AopContext;

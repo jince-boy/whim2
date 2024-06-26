@@ -3,8 +3,6 @@ package com.whim.service;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.whim.pojo.entity.SysUser;
 
-import java.util.List;
-
 /**
  * 系统用户(SysUser)表服务接口
  *
