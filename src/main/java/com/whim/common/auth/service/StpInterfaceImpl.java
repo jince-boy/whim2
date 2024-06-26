@@ -1,4 +1,4 @@
-package com.whim.common.auth.config;
+package com.whim.common.auth.service;
 
 import cn.dev33.satoken.stp.StpInterface;
 import com.whim.service.ISysPermissionService;

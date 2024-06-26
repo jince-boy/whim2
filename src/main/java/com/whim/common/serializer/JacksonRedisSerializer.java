@@ -1,6 +1,6 @@
 package com.whim.common.serializer;
 
-import com.alibaba.fastjson2.JSON;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.data.redis.serializer.RedisSerializer;
 import org.springframework.data.redis.serializer.SerializationException;
 
@@ -12,13 +12,14 @@ import java.nio.charset.StandardCharsets;
  * date: 2024/6/25 下午10:40
  * description: 自定义redis value序列化
  */
-public class FastJsonRedisSerializer<T> implements RedisSerializer<T> {
-    private final Charset DEFAULT_CHARSET = StandardCharsets.UTF_8;
+public class JacksonRedisSerializer<T> implements RedisSerializer<T> {
     private final Class<T> tClass;
+    private final ObjectMapper objectMapper;
 
-    public FastJsonRedisSerializer(Class<T> tClass) {
+    public JacksonRedisSerializer(Class<T> tClass) {
         super();
         this.tClass = tClass;
+        this.objectMapper = new ObjectMapper();
     }
 
     @Override
@@ -26,7 +27,11 @@ public class FastJsonRedisSerializer<T> implements RedisSerializer<T> {
         if (value == null) {
             return new byte[0];
         }
-        return JSON.toJSONBytes(value);
+        try {
+            return objectMapper.writeValueAsBytes(value);
+        } catch (Exception e) {
+            throw new SerializationException("Could not serialize object", e);
+        }
     }
 
     @Override
@@ -34,7 +39,11 @@ public class FastJsonRedisSerializer<T> implements RedisSerializer<T> {
         if (bytes == null || bytes.length == 0) {
             return null;
         }
-        String str = new String(bytes, DEFAULT_CHARSET);
-        return JSON.parseObject(str, this.tClass);
+        try {
+
+            return objectMapper.readValue(bytes, this.tClass);
+        } catch (Exception e) {
+            throw new SerializationException("Could not deserialize bytes", e);
+        }
     }
 }

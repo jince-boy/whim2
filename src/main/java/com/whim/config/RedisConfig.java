@@ -1,6 +1,6 @@
 package com.whim.config;
 
-import com.whim.common.serializer.FastJsonRedisSerializer;
+import com.whim.common.serializer.JacksonRedisSerializer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
@@ -19,15 +19,15 @@ public class RedisConfig {
         RedisTemplate<String, Object> template = new RedisTemplate<>();
         //设置Redis连接工厂
         template.setConnectionFactory(factory);
-        FastJsonRedisSerializer<Object> objectFastJsonRedisSerializer = new FastJsonRedisSerializer<>(Object.class);
+        JacksonRedisSerializer<Object> objectJacksonRedisSerializer = new JacksonRedisSerializer<>(Object.class);
         // 使用StringRedisSerializer来序列化和反序列化redis的key值
         template.setKeySerializer(new StringRedisSerializer());
         // 使用自定义序列化和反序列化redis的value值
-        template.setValueSerializer(objectFastJsonRedisSerializer);
+        template.setValueSerializer(objectJacksonRedisSerializer);
         // Hash的key也采用StringRedisSerializer的序列化方式
         template.setHashKeySerializer(new StringRedisSerializer());
         // 使用自定义序列化和反序列化redis的value值
-        template.setHashValueSerializer(objectFastJsonRedisSerializer);
+        template.setHashValueSerializer(objectJacksonRedisSerializer);
         template.afterPropertiesSet();
         return template;
     }
