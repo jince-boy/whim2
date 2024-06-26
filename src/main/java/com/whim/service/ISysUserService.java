@@ -11,4 +11,9 @@ import com.whim.pojo.entity.SysUser;
  */
 public interface ISysUserService extends IService<SysUser> {
 
+    /**
+     * 获取验证码
+     * @return base64 验证码
+     */
+    String getCaptcha();
 }

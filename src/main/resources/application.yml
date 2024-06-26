@@ -35,10 +35,10 @@ spring:
   # Redis
   data:
     redis:
-      host: ${REDIS_IP:127.0.0.1}
-      port: ${REDIS_PORT:6379}
-      password: ${REDIS_PASSWD:root}
-      database: ${REDIS_DB:0}
+      host: 127.0.0.1
+      port: 6379
+      password:
+      database: 0
   # 数据库迁移
   flyway:
     enabled: true
