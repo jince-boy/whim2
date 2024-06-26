@@ -25,6 +25,7 @@
         <sa-token.version>1.38.0</sa-token.version>
         <sa-token-redis-jackson.version>1.38.0</sa-token-redis-jackson.version>
         <redis.version>3.2.6</redis.version>
+        <easy-captcha.version>1.6.2</easy-captcha.version>
     </properties>
     <dependencies>
         <!-- spring-boot-starter-web -->
@@ -85,6 +86,12 @@
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
             <version>${commons-lang.version}</version>
+        </dependency>
+        <!--验证码-->
+        <dependency>
+            <groupId>com.github.whvcse</groupId>
+            <artifactId>easy-captcha</artifactId>
+            <version>${easy-captcha.version}</version>
         </dependency>
         <!--jbcrypt 密码加密-->
         <dependency>
