@@ -90,14 +90,18 @@ public class ConvertUtils {
      * @return 结果
      */
     public static Byte toByte(Object value, Byte defaultValue) {
-        if (value == null) {
-            return defaultValue;
-        }
-        if (value instanceof Byte) {
-            return (Byte) value;
-        }
-        if (value instanceof Number) {
-            return ((Number) value).byteValue();
+        switch (value) {
+            case null -> {
+                return defaultValue;
+            }
+            case Byte b -> {
+                return b;
+            }
+            case Number number -> {
+                return number.byteValue();
+            }
+            default -> {
+            }
         }
         final String valueStr = toStr(value, null);
         if (StringUtils.isEmpty(valueStr)) {
@@ -132,14 +136,18 @@ public class ConvertUtils {
      * @return 结果
      */
     public static Short toShort(Object value, Short defaultValue) {
-        if (value == null) {
-            return defaultValue;
-        }
-        if (value instanceof Short) {
-            return (Short) value;
-        }
-        if (value instanceof Number) {
-            return ((Number) value).shortValue();
+        switch (value) {
+            case null -> {
+                return defaultValue;
+            }
+            case Short i -> {
+                return i;
+            }
+            case Number number -> {
+                return number.shortValue();
+            }
+            default -> {
+            }
         }
         final String valueStr = toStr(value, null);
         if (StringUtils.isEmpty(valueStr)) {
@@ -213,14 +221,18 @@ public class ConvertUtils {
      * @return 结果
      */
     public static Integer toInt(Object value, Integer defaultValue) {
-        if (value == null) {
-            return defaultValue;
-        }
-        if (value instanceof Integer) {
-            return (Integer) value;
-        }
-        if (value instanceof Number) {
-            return ((Number) value).intValue();
+        switch (value) {
+            case null -> {
+                return defaultValue;
+            }
+            case Integer i -> {
+                return i;
+            }
+            case Number number -> {
+                return number.intValue();
+            }
+            default -> {
+            }
         }
         final String valueStr = toStr(value, null);
         if (StringUtils.isEmpty(valueStr)) {
@@ -336,14 +348,18 @@ public class ConvertUtils {
      * @return 结果
      */
     public static Long toLong(Object value, Long defaultValue) {
-        if (value == null) {
-            return defaultValue;
-        }
-        if (value instanceof Long) {
-            return (Long) value;
-        }
-        if (value instanceof Number) {
-            return ((Number) value).longValue();
+        switch (value) {
+            case null -> {
+                return defaultValue;
+            }
+            case Long l -> {
+                return l;
+            }
+            case Number number -> {
+                return number.longValue();
+            }
+            default -> {
+            }
         }
         final String valueStr = toStr(value, null);
         if (StringUtils.isEmpty(valueStr)) {
@@ -379,14 +395,18 @@ public class ConvertUtils {
      * @return 结果
      */
     public static Double toDouble(Object value, Double defaultValue) {
-        if (value == null) {
-            return defaultValue;
-        }
-        if (value instanceof Double) {
-            return (Double) value;
-        }
-        if (value instanceof Number) {
-            return ((Number) value).doubleValue();
+        switch (value) {
+            case null -> {
+                return defaultValue;
+            }
+            case Double v -> {
+                return v;
+            }
+            case Number number -> {
+                return number.doubleValue();
+            }
+            default -> {
+            }
         }
         final String valueStr = toStr(value, null);
         if (StringUtils.isEmpty(valueStr)) {
@@ -422,14 +442,18 @@ public class ConvertUtils {
      * @return 结果
      */
     public static Float toFloat(Object value, Float defaultValue) {
-        if (value == null) {
-            return defaultValue;
-        }
-        if (value instanceof Float) {
-            return (Float) value;
-        }
-        if (value instanceof Number) {
-            return ((Number) value).floatValue();
+        switch (value) {
+            case null -> {
+                return defaultValue;
+            }
+            case Float v -> {
+                return v;
+            }
+            case Number number -> {
+                return number.floatValue();
+            }
+            default -> {
+            }
         }
         final String valueStr = toStr(value, null);
         if (StringUtils.isEmpty(valueStr)) {
@@ -545,14 +569,18 @@ public class ConvertUtils {
      * @return 结果
      */
     public static BigInteger toBigInteger(Object value, BigInteger defaultValue) {
-        if (value == null) {
-            return defaultValue;
-        }
-        if (value instanceof BigInteger) {
-            return (BigInteger) value;
-        }
-        if (value instanceof Long) {
-            return BigInteger.valueOf((Long) value);
+        switch (value) {
+            case null -> {
+                return defaultValue;
+            }
+            case BigInteger bigInteger -> {
+                return bigInteger;
+            }
+            case Long l -> {
+                return BigInteger.valueOf(l);
+            }
+            default -> {
+            }
         }
         final String valueStr = toStr(value, null);
         if (StringUtils.isEmpty(valueStr)) {
@@ -587,20 +615,24 @@ public class ConvertUtils {
      * @return 结果
      */
     public static BigDecimal toBigDecimal(Object value, BigDecimal defaultValue) {
-        if (value == null) {
-            return defaultValue;
-        }
-        if (value instanceof BigDecimal) {
-            return (BigDecimal) value;
-        }
-        if (value instanceof Long) {
-            return new BigDecimal((Long) value);
-        }
-        if (value instanceof Double) {
-            return BigDecimal.valueOf((Double) value);
-        }
-        if (value instanceof Integer) {
-            return new BigDecimal((Integer) value);
+        switch (value) {
+            case null -> {
+                return defaultValue;
+            }
+            case BigDecimal bigDecimal -> {
+                return bigDecimal;
+            }
+            case Long l -> {
+                return new BigDecimal(l);
+            }
+            case Double v -> {
+                return BigDecimal.valueOf(v);
+            }
+            case Integer i -> {
+                return new BigDecimal(i);
+            }
+            default -> {
+            }
         }
         final String valueStr = toStr(value, null);
         if (StringUtils.isEmpty(valueStr)) {
