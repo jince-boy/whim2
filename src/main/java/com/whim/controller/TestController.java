@@ -1,5 +1,6 @@
 package com.whim.controller;
 
+import cn.dev33.satoken.annotation.SaCheckPermission;
 import cn.dev33.satoken.annotation.SaIgnore;
 import com.whim.common.core.base.BaseController;
 import com.whim.common.web.Result;
@@ -20,6 +21,12 @@ public class TestController extends BaseController {
     @GetMapping
     @SaIgnore
     public Result<Void> test() {
+        return Result.success();
+    }
+
+    @SaCheckPermission("sys:permission:add")
+    @GetMapping("/testCheckPermission")
+    public Result<Void> testCheckPermission() {
         return Result.success();
     }
 }

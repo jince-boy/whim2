@@ -6,7 +6,6 @@ import com.whim.service.ISysRoleService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
-
 import java.util.List;
 
 /**
@@ -23,7 +22,11 @@ public class StpInterfaceImpl implements StpInterface {
 
     @Override
     public List<String> getPermissionList(Object userId, String loginType) {
-        return sysPermissionService.getPermissionCodeByUserId((Long) userId);
+        long sysUserId = Long.parseLong(userId.toString());
+        if (sysUserId == 1L) {
+            return List.of("*");
+        }
+        return sysPermissionService.getPermissionCodeByUserId(sysUserId);
     }
 
     @Override

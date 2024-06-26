@@ -11,7 +11,7 @@ class WhimApplicationTests {
 
     @Test
     void contextLoads() {
-        log.info(BCryptUtils.encode("123456"));
+        log.info(BCryptUtils.encode("123456789"));
     }
 
 }
