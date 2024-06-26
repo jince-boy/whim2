@@ -1,3 +1,7 @@
+project:
+  name: @project.name@
+  version: @project.version@
+  url: @project.url@
 server:
   port: 8080
 spring:

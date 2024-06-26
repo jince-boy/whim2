@@ -3,7 +3,10 @@ package com.whim.config;
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.info.Contact;
 import io.swagger.v3.oas.models.info.Info;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
+
 import org.springframework.context.annotation.Configuration;
 
 /**
@@ -12,16 +15,28 @@ import org.springframework.context.annotation.Configuration;
  * description:
  */
 @Configuration
+@Slf4j
 public class SwaggerConfig {
+    @Value("${project.name}")
+    private final String title = "Whim";
+    @Value("${project.version}")
+    private String version;
+    @Value("${project.url}")
+    private String contactUrl = "https://www.jince.tech";
+
     @Bean
     public OpenAPI OpenApi() {
+        String description = "Whim开发接口文档";
+        String termsOfService = "无";
+        String contactName = "JinCe";
+        String contactEmail = "jince_hm@163.com";
         return new OpenAPI().info(
                 new Info()
-                        .title("Whim")
-                        .version("0.0.1")
-                        .description("Whim开发接口文档")
-                        .termsOfService("无")
-                        .contact(new Contact().name("JinCe").email("jince_hm@163.com").url("https://www.jince.tech"))
+                        .title(title)
+                        .version(version)
+                        .description(description)
+                        .termsOfService(termsOfService)
+                        .contact(new Contact().name(contactName).email(contactEmail).url(contactUrl))
         );
     }
 }
