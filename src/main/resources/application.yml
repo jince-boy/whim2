@@ -80,3 +80,7 @@ sa-token:
   is-read-cookie: false
   # 自动续签
   auto-renew: true
+# 文件配置
+file:
+  storage:
+    location: "/path/to/storage"
