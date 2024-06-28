@@ -11,9 +11,14 @@
     <groupId>com.whim</groupId>
     <artifactId>whim</artifactId>
     <version>0.0.1-SNAPSHOT</version>
+    <packaging>pom</packaging>
     <name>whim</name>
     <description>whim</description>
     <url>https://whim.jince.tech</url>
+    <modules>
+        <module>whim-system</module>
+        <module>whim-common</module>
+    </modules>
     <properties>
         <java.version>21</java.version>
         <commons-lang.version>3.14.0</commons-lang.version>
