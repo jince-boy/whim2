@@ -23,6 +23,7 @@
         <module>whim-core</module>
         <module>whim-model</module>
         <module>whim-web</module>
+        <module>whim-file</module>
     </modules>
     <properties>
         <whim.version>1.0.0-SNAPSHOT</whim.version>
@@ -122,6 +123,12 @@
             <dependency>
                 <groupId>com.whim</groupId>
                 <artifactId>whim-core</artifactId>
+                <version>${whim.version}</version>
+            </dependency>
+            <!--文件模块-->
+            <dependency>
+                <groupId>com.whim</groupId>
+                <artifactId>whim-file</artifactId>
                 <version>${whim.version}</version>
             </dependency>
         </dependencies>

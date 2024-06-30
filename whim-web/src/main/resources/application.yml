@@ -83,4 +83,5 @@ sa-token:
 # 文件配置
 file:
   storage:
-    location: "/path/to/storage"
+    local:
+      path: classpath:/com/whim/file/file
