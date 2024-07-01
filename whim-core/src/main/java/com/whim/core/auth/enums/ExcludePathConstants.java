@@ -15,6 +15,7 @@ public enum ExcludePathConstants {
     AUTH_CAPTCHA("/auth/captcha", "验证码"),
     AUTH_LOGIN("/auth/login", "用户登录"),
     FAVICON_PATH("/favicon.ico", "favicon.ico"),
+    TEST_PATH("/error", "springboot异常为做处理就会转发到/error BasicErrorController"),
     ;
     private final String path;
     private final String description;
