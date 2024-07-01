@@ -31,6 +31,13 @@ import java.util.stream.Collectors;
 @RestControllerAdvice
 @Slf4j
 public class GlobalExceptionHandler {
+    // 兜底异常处理器
+    @ExceptionHandler(Throwable.class)
+    public Result<String> handleGeneralException(Throwable e) {
+        log.error("Throwable异常:{}", e.getMessage());
+        return Result.error(HttpStatus.INTERNAL_SERVER_ERROR, "服务器内部错误，请稍后再试");
+    }
+
     /**
      * 请求方式错误
      */
@@ -39,6 +46,7 @@ public class GlobalExceptionHandler {
         log.error("不支持'{}'请求", e.getMethod());
         return Result.error(HttpStatus.METHOD_NOT_ALLOWED, "请求方式错误");
     }
+
     /**
      * 参数验证异常
      */
@@ -50,6 +58,7 @@ public class GlobalExceptionHandler {
         log.error(String.join("; ", collect));
         return Result.error(StringUtils.join(collect, ";"));
     }
+
     /**
      * 参数验证异常
      */
@@ -61,6 +70,7 @@ public class GlobalExceptionHandler {
         log.error(String.join("; ", collect));
         return Result.error(StringUtils.join(collect, ";"));
     }
+
     /**
      * 参数验证异常
      */
@@ -72,6 +82,7 @@ public class GlobalExceptionHandler {
         log.error(String.join("; ", collect));
         return Result.error(StringUtils.join(collect, ";"));
     }
+
     /**
      * 业务异常处理
      */
