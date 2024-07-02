@@ -47,6 +47,13 @@ spring:
     table: flyway_schema_history
     validate-on-migrate: true
     baseline-on-migrate: true
+  # 热部署
+  devtools:
+    restart:
+      additional-paths: ../whim-file,../whim-system,../whim-core,../whim-common,../whim-model
+    livereload:
+      enabled: false
+# Mybatis plus
 mybatis-plus:
   # 搜索指定包别名
   type-aliases-package: com.whim.mapper.*
@@ -84,4 +91,4 @@ sa-token:
 file:
   storage:
     local:
-      path: classpath:/com/whim/file/file
+      path: /whim/file/

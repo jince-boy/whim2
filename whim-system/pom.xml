@@ -33,5 +33,11 @@
             <artifactId>sa-token-redis-jackson</artifactId>
             <version>${sa-token-redis-jackson.version}</version>
         </dependency>
+        <!--spring-boot-devtools-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-devtools</artifactId>
+            <optional>true</optional>
+        </dependency>
     </dependencies>
 </project>

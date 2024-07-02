@@ -29,6 +29,7 @@
         <whim.version>1.0.0-SNAPSHOT</whim.version>
         <java.version>21</java.version>
         <commons-lang.version>3.14.0</commons-lang.version>
+        <commons-io.version>2.16.1</commons-io.version>
         <mybatis-plus.version>3.5.7</mybatis-plus.version>
         <druid.version>1.2.20</druid.version>
         <jbcrypt.version>0.4</jbcrypt.version>
@@ -88,6 +89,12 @@
                 <groupId>org.apache.commons</groupId>
                 <artifactId>commons-lang3</artifactId>
                 <version>${commons-lang.version}</version>
+            </dependency>
+            <!--commons-io-->
+            <dependency>
+                <groupId>commons-io</groupId>
+                <artifactId>commons-io</artifactId>
+                <version>${commons-io.version}</version>
             </dependency>
             <!--验证码-->
             <dependency>
