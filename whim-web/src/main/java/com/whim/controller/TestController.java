@@ -10,12 +10,12 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
 
 /**
  * @author Jince
@@ -31,9 +31,8 @@ public class TestController extends BaseController {
 
     @PostMapping
     @SaIgnore
-    public Result<Void> test(@RequestParam("file") MultipartFile file) throws IOException {
-        fileService.uploadFile(file);
-        return Result.success();
+    public Result<String> test(@RequestPart("file") MultipartFile file) throws IOException {
+        return Result.success("成功", fileService.uploadFile(file));
     }
 
     @SaCheckPermission("sys:permission:add")

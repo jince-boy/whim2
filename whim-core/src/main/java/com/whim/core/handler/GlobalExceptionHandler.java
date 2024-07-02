@@ -3,7 +3,6 @@ package com.whim.core.handler;
 import cn.dev33.satoken.exception.NotLoginException;
 import cn.dev33.satoken.exception.NotPermissionException;
 import com.whim.common.exception.CheckCaptchaException;
-import com.whim.common.exception.InvalidParameterException;
 import com.whim.common.exception.ServiceException;
 import com.whim.common.exception.UserNotFoundException;
 import com.whim.common.exception.UserPasswordNotMatchException;
@@ -36,6 +35,12 @@ public class GlobalExceptionHandler {
     public Result<String> handleGeneralException(Throwable e) {
         log.error("Throwable异常:{}", e.getMessage());
         return Result.error(HttpStatus.INTERNAL_SERVER_ERROR, "服务器内部错误，请稍后再试");
+    }
+    // 非法参数异常
+    @ExceptionHandler(IllegalArgumentException.class)
+    public Result<String> handleIllegalArgumentException(IllegalArgumentException e) {
+        log.error("非法参数异常:{}", e.getMessage());
+        return Result.error(HttpStatus.BAD_REQUEST, e.getMessage());
     }
 
     /**
@@ -90,15 +95,6 @@ public class GlobalExceptionHandler {
     public Result<String> handleServiceExceptionHandler(ServiceException exception) {
         log.error(exception.getMessage());
         return Result.error(exception.getMessage());
-    }
-
-    /**
-     * 参数异常处理
-     */
-    @ExceptionHandler(InvalidParameterException.class)
-    public Result<String> handleInvalidParameterExceptionHandler(InvalidParameterException exception) {
-        log.error(exception.getMessage());
-        return Result.argumentError(exception.getMessage());
     }
 
     /**

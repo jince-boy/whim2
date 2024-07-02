@@ -14,4 +14,6 @@ import java.io.IOException;
  */
 public interface FileService extends IService<SysFile> {
     String uploadFile(MultipartFile file) throws IOException;
+
+    String uploadFile(String folderName, MultipartFile file) throws IOException;
 }
