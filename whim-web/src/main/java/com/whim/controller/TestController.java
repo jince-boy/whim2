@@ -3,8 +3,8 @@ package com.whim.controller;
 import cn.dev33.satoken.annotation.SaCheckPermission;
 import cn.dev33.satoken.annotation.SaIgnore;
 import com.whim.common.base.BaseController;
-import com.whim.common.utils.FileUtils;
 import com.whim.common.web.Result;
+import com.whim.entity.SysFile;
 import com.whim.service.FileService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -14,8 +14,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
-
-import java.io.File;
 
 /**
  * @author Jince
@@ -31,9 +29,8 @@ public class TestController extends BaseController {
 
     @PostMapping
     @SaIgnore
-    public Result<File> test(@RequestPart("file") MultipartFile file) throws Exception {
-        return Result.success("成功", FileUtils.multipartFileToFile(file));
-//        return Result.success("成功", fileService.uploadFile(FileUtils.multipartFileToFile(file), "opi", "测试一下"));
+    public Result<SysFile> test(@RequestPart("file") MultipartFile file) throws Exception {
+        return Result.success("成功", fileService.uploadFile(file, "/aaa/ccc/", "测试一下"));
     }
 
     @SaCheckPermission("sys:permission:add")

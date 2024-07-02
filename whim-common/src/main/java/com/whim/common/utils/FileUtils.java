@@ -17,6 +17,7 @@ public class FileUtils {
 
     /**
      * MultipartFile转换File
+     * 此转换会创建临时文件，请注意，可以配合try-with-resources来一起使用
      *
      * @param multipartFile multipart file
      * @return File
