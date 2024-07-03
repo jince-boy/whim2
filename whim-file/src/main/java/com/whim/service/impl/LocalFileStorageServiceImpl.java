@@ -16,6 +16,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -54,7 +55,7 @@ public class LocalFileStorageServiceImpl extends ServiceImpl<SysFileMapper, SysF
         // 查看用户是否提供了的文件夹路径，如果提供了，查看前面是否有"/",确保上传文件一定是绝对路径
         String targetFolder = StringUtils.defaultIfEmpty(StringUtils.strip(folderName, "/"), "default");
         // 在basePath前加上"/"确保获取的是绝对路径
-        Path absoluteBasePath = Paths.get(StringUtils.prependIfMissing(basePath, "/")).toAbsolutePath().normalize();
+        Path absoluteBasePath = Paths.get(StringUtils.prependIfMissing(this.basePath, "/")).toAbsolutePath().normalize();
         Path absolutePath = absoluteBasePath.resolve(targetFolder).normalize();
         // 创建文件夹
         Files.createDirectories(absolutePath);
@@ -82,7 +83,47 @@ public class LocalFileStorageServiceImpl extends ServiceImpl<SysFileMapper, SysF
             }
             return sysFile;
         } catch (Exception e) {
-            log.error("文件上传失败", e);
+            log.error("文件上传报错", e);
+            throw new ServiceException("服务器错误，请稍后重试。");
+        }
+    }
+
+    /**
+     * 删除本地文件
+     *
+     * @param fileId 文件id
+     * @return true删除成功，false删除失败
+     */
+    @Transactional
+    @Override
+    public boolean deleteFile(Long fileId) {
+        SysFile sysFile = this.getById(fileId);
+        if (sysFile == null) {
+            throw new IllegalArgumentException("文件id不存在");
+        }
+        try {
+            // 首先删除数据库记录
+            if (!this.removeById(sysFile.getId())) {
+                log.error("文件数据删除失败，fileId: {}", fileId);
+                throw new ServiceException("服务器错误，请稍后重试。");
+            }
+            // 尝试删除文件
+            Path filePath = Paths.get(StringUtils.prependIfMissing(this.basePath, "/"))
+                    .toAbsolutePath()
+                    .resolve(sysFile.getPath()).normalize();
+            if (Files.exists(filePath)) {
+                try {
+                    Files.delete(filePath);
+                } catch (IOException e) {
+                    log.error("文件删除失败，路径: {}", filePath, e);
+                    throw new ServiceException("服务器错误，请稍后重试。");
+                }
+            } else {
+                log.info("文件不存在，仅删除了数据库记录。文件路径: {}", filePath);
+            }
+            return true;
+        } catch (Exception e) {
+            log.error("删除文件过程中发生错误，fileId: {}", fileId, e);
             throw new ServiceException("服务器错误，请稍后重试。");
         }
     }
