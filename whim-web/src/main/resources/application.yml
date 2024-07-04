@@ -39,6 +39,12 @@ spring:
       port: 6379
       password:
       database: 0
+      jedis:
+        pool:
+          max-active: 8
+          max-idle: 8
+          min-idle: 0
+          max-wait: 1000ms
   # 数据库迁移
   flyway:
     enabled: true
