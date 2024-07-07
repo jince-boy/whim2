@@ -2,6 +2,7 @@ package com.whim.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.whim.entity.SysFile;
+import org.springframework.core.io.Resource;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -31,4 +32,6 @@ public interface FileService extends IService<SysFile> {
      * @return true删除成功，false删除失败
      */
     boolean deleteFile(Long fileId) throws IOException;
+
+    Resource getFile(Long fileId) throws Exception;
 }

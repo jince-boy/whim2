@@ -8,6 +8,7 @@ import com.whim.entity.SysFile;
 import com.whim.service.FileService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.core.io.Resource;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -41,6 +42,12 @@ public class TestController extends BaseController {
     @SaIgnore
     public Result<Boolean> test(@RequestParam("fileId") Long fileId) throws IOException {
         return Result.success("删除成功", fileService.deleteFile(fileId));
+    }
+
+    @GetMapping
+    @SaIgnore
+    public Result<Resource> tests(@RequestParam("fileId") Long fileId) throws Exception {
+        return Result.success("获取成功", fileService.getFile(fileId));
     }
 
     @SaCheckPermission("sys:permission:add")

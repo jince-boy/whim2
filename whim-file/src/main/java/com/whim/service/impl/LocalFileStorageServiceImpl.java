@@ -11,12 +11,15 @@ import com.whim.service.FileService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -126,6 +129,41 @@ public class LocalFileStorageServiceImpl extends ServiceImpl<SysFileMapper, SysF
             log.error("删除文件过程中发生错误，fileId: {}", fileId, e);
             throw new ServiceException("服务器错误，请稍后重试。");
         }
+    }
+
+    /**
+     * 从本地存储中根据文件ID获取文件.
+     *
+     * @param fileId 文件的ID
+     * @return 代表文件的Resource
+     */
+    @Transactional(readOnly = true)
+    @Override
+    public Resource getFile(Long fileId) {
+        SysFile sysFile = this.getById(fileId);
+        if (sysFile == null) {
+            throw new IllegalArgumentException("文件id不存在");
+        }
+        try {
+            // 确定文件的路径
+            Path filePath = Paths.get(StringUtils.prependIfMissing(this.basePath, "/")).toAbsolutePath().resolve(sysFile.getPath()).normalize();
+            // 检查文件是否存在且为常规文件
+            if (Files.exists(filePath) && Files.isRegularFile(filePath)) {
+                Resource resource = new UrlResource(filePath.toUri());
+                // 检查资源是否存在且可读
+                if (resource.exists() && resource.isReadable()) {
+                    return resource;
+                } else {
+                    throw new ServiceException("文件不可读或不存在");
+                }
+            } else {
+                throw new ServiceException("文件不存在");
+            }
+        } catch (MalformedURLException e) {
+            log.error("检索文件时发生错误，fileId: {}", fileId, e);
+            throw new ServiceException("服务器错误，请稍后重试。");
+        }
+
     }
 }
 
