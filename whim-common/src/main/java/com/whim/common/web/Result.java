@@ -1,12 +1,25 @@
 package com.whim.common.web;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.whim.common.utils.FileUtils;
 import lombok.Data;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.core.io.Resource;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.util.MimeTypeUtils;
+import org.springframework.web.util.UriUtils;
 
+import java.io.IOException;
 import java.io.Serial;
 import java.io.Serializable;
+import java.net.URI;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.LinkedHashMap;
+import java.util.Objects;
 
 /**
  * @author Jince
@@ -14,6 +27,7 @@ import java.util.LinkedHashMap;
  * description: Result统一响应工具类
  */
 @Data
+@Slf4j
 public class Result<T> implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
@@ -155,6 +169,41 @@ public class Result<T> implements Serializable {
      */
     public static <T> Result<T> argumentError(String message) {
         return new Result<T>(null).setResult(HttpStatus.BAD_REQUEST, false, message);
+    }
+
+    /**
+     * 获取文件
+     *
+     * @param resource 资源
+     * @return ResponseEntity<Resource>
+     * @throws IOException 异常
+     */
+    public static ResponseEntity<Resource> file(Resource resource) throws IOException {
+        try {
+            if (!FileUtils.isFileSafe(resource)) {
+                throw new IllegalArgumentException("文件路径不安全");
+            }
+            HttpHeaders headers = new HttpHeaders();
+            Path filePath;
+            String mimeType;
+            URI uri = resource.getURI();
+            if (uri.getScheme().equals("file") && uri.getPath().startsWith("/")) {
+                filePath = Path.of(uri.getPath().substring(1));
+            } else {
+                filePath = Path.of(uri);
+            }
+            mimeType = Files.probeContentType(filePath);
+            if (mimeType == null) {
+                mimeType = MimeTypeUtils.APPLICATION_OCTET_STREAM_VALUE;
+            }
+            headers.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + UriUtils.encode(Objects.requireNonNull(resource.getFilename()), StandardCharsets.UTF_8) + "\"");
+            headers.add(HttpHeaders.CONTENT_TYPE, mimeType);
+            headers.add(HttpHeaders.CONTENT_LENGTH, String.valueOf(resource.contentLength()));
+            return new ResponseEntity<>(resource, headers, HttpStatus.OK);
+        } catch (Exception e) {
+            log.error("控制器返回文件时发生错误", e);
+            throw new IOException("处理文件时，发生错误");
+        }
     }
 
     /**
