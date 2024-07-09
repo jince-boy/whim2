@@ -33,5 +33,11 @@ public interface FileService extends IService<SysFile> {
      */
     boolean deleteFile(Long fileId) throws IOException;
 
-    Resource getFile(Long fileId) throws Exception;
+    /**
+     * 从本地存储中根据文件ID获取文件.
+     *
+     * @param fileId 文件的ID
+     * @return 代表文件的Resource
+     */
+    Resource getFile(Long fileId);
 }
