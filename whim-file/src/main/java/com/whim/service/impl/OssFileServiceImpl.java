@@ -20,7 +20,7 @@ import java.io.IOException;
 @Service
 @RequiredArgsConstructor
 @Slf4j
-public class OssFileStorageServiceImpl extends ServiceImpl<SysFileMapper, SysFile> implements FileService {
+public class OssFileServiceImpl extends ServiceImpl<SysFileMapper, SysFile> implements FileService {
     @Override
     public SysFile uploadFile(MultipartFile file, String folderName, String description) throws Exception {
         return null;

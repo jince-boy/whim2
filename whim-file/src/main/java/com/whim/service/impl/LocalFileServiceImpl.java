@@ -33,7 +33,7 @@ import java.nio.file.StandardCopyOption;
 @Service
 @RequiredArgsConstructor
 @Slf4j
-public class LocalFileStorageServiceImpl extends ServiceImpl<SysFileMapper, SysFile> implements FileService {
+public class LocalFileServiceImpl extends ServiceImpl<SysFileMapper, SysFile> implements FileService {
     private final SysFileMapper fileMapper;
     // 本地上传目录
     @Value("${file.storage.local.path}")
