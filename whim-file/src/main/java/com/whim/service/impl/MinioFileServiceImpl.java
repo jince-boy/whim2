@@ -15,7 +15,7 @@ import java.io.IOException;
 /**
  * @author Jince
  * date: 2024/7/11 下午11:18
- * description: Minio 上传服务
+ * description:
  */
 @Service
 @RequiredArgsConstructor
