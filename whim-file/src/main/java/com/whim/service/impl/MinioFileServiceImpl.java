@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.whim.entity.SysFile;
 import com.whim.mapper.SysFileMapper;
 import com.whim.service.FileService;
+import io.minio.MinioClient;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.io.Resource;
@@ -21,6 +22,10 @@ import java.io.IOException;
 @RequiredArgsConstructor
 @Slf4j
 public class MinioFileServiceImpl extends ServiceImpl<SysFileMapper, SysFile> implements FileService {
+
+    private final MinioClient minioClient;
+    private final SysFileMapper sysFileMapper;
+
     @Override
     public SysFile uploadFile(MultipartFile file, String folderName, String description) throws Exception {
         return null;

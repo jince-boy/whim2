@@ -17,6 +17,11 @@
             <groupId>com.whim</groupId>
             <artifactId>whim-model</artifactId>
         </dependency>
+        <!--minio-->
+        <dependency>
+            <groupId>io.minio</groupId>
+            <artifactId>minio</artifactId>
+        </dependency>
     </dependencies>
 
 </project>

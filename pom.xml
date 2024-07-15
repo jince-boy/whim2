@@ -39,6 +39,7 @@
         <redis.version>3.3.0</redis.version>
         <easy-captcha.version>1.6.2</easy-captcha.version>
         <spring-boot-starter-validation.version>3.3.0</spring-boot-starter-validation.version>
+        <minio.version>8.5.10</minio.version>
     </properties>
     <dependencyManagement>
         <dependencies>
@@ -107,6 +108,12 @@
                 <groupId>org.mindrot</groupId>
                 <artifactId>jbcrypt</artifactId>
                 <version>${jbcrypt.version}</version>
+            </dependency>
+            <!--minio-->
+            <dependency>
+                <groupId>io.minio</groupId>
+                <artifactId>minio</artifactId>
+                <version>${minio.version}</version>
             </dependency>
             <!--通用模块-->
             <dependency>
