@@ -15,7 +15,7 @@ import java.io.IOException;
 /**
  * @author Jince
  * date: 2024/7/10 下午11:25
- * description:
+ * description: 七牛云上传服务
  */
 @Service
 @RequiredArgsConstructor

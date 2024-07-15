@@ -15,7 +15,7 @@ import java.io.IOException;
 /**
  * @author Jince
  * date: 2024/7/10 下午11:15
- * description:
+ * description: Oss上传服务
  */
 @Service
 @RequiredArgsConstructor
