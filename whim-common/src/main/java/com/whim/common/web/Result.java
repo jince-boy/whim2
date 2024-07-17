@@ -196,7 +196,8 @@ public class Result<T> implements Serializable {
             if (mimeType == null) {
                 mimeType = MimeTypeUtils.APPLICATION_OCTET_STREAM_VALUE;
             }
-            headers.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + UriUtils.encode(Objects.requireNonNull(resource.getFilename()), StandardCharsets.UTF_8) + "\"");
+            // 为什么会注释CONTENT_DISPOSITION 允许浏览器根据文件类型自行决定如何处理文件是查看还是下载，否则不管是图片还是文件都默认是下载
+            // headers.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + UriUtils.encode(Objects.requireNonNull(resource.getFilename()), StandardCharsets.UTF_8) + "\"");
             headers.add(HttpHeaders.CONTENT_TYPE, mimeType);
             headers.add(HttpHeaders.CONTENT_LENGTH, String.valueOf(resource.contentLength()));
             return new ResponseEntity<>(resource, headers, HttpStatus.OK);
