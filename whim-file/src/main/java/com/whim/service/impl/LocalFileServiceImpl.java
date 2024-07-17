@@ -57,8 +57,15 @@ public class LocalFileServiceImpl extends ServiceImpl<SysFileMapper, SysFile> im
         }
         // 查看用户是否提供了的文件夹路径，如果提供了，查看前面是否有"/",确保上传文件一定是绝对路径
         String targetFolder = StringUtils.defaultIfEmpty(StringUtils.strip(folderName, "/"), "default");
-        // 在basePath前加上"/"确保获取的是绝对路径
-        Path absoluteBasePath = Paths.get(StringUtils.prependIfMissing(this.basePath, "/")).toAbsolutePath().normalize();
+        Path absoluteBasePath;
+        if (System.getProperty("os.name").toLowerCase().contains("win") && this.basePath.matches("^[a-zA-Z]:.*")) {
+            // Windows 系统并且 basePath 是绝对路径
+            absoluteBasePath = Paths.get(this.basePath).toAbsolutePath().normalize();
+        } else {
+            // 非 Windows 系统或者 basePath 不是绝对路径
+            // 在basePath前加上"/"确保获取的是绝对路径
+            absoluteBasePath = Paths.get(StringUtils.prependIfMissing(this.basePath, "/")).toAbsolutePath().normalize();
+        }
         Path absolutePath = absoluteBasePath.resolve(targetFolder).normalize();
         // 创建文件夹
         Files.createDirectories(absolutePath);
