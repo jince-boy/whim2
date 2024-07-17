@@ -1,11 +1,14 @@
 package com.whim.common.utils;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.core.io.Resource;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Objects;
 
 /**
@@ -81,5 +84,34 @@ public class FileUtils {
         // 检查文件路径是否包含非法字符，实际项目中需要根据具体情况定义“安全”的文件路径
         String path = resource.getFile().getPath();
         return !path.contains("..") && !path.startsWith("/");
+    }
+
+    /**
+     * 检测路径是否在windows系统下，并且是有效路径
+     *
+     * @param basePath 路径
+     * @return true是windows系统下并且为有效路径, false不是windows系统
+     */
+    public static boolean isWindowsAndValidPath(String basePath) {
+        String osName = System.getProperty("os.name").toLowerCase();
+        return osName.contains("win") && basePath.matches("^[a-zA-Z]:.*");
+    }
+    /**
+     * 根据操作系统和提供的 basePath 生成绝对路径。
+     *
+     * @param basePath 要转换为绝对路径的基础路径
+     * @return 绝对路径
+     */
+    public static Path generateAbsolutePath(String basePath) {
+        Path absoluteBasePath;
+        if (isWindowsAndValidPath(basePath)) {
+            // Windows 系统并且 basePath 是绝对路径
+            absoluteBasePath = Paths.get(basePath).toAbsolutePath().normalize();
+        } else {
+            // 非 Windows 系统或者 basePath 不是绝对路径
+            // 在 basePath 前加上 "/" 确保获取的是绝对路径
+            absoluteBasePath = Paths.get(StringUtils.prependIfMissing(basePath, "/")).toAbsolutePath().normalize();
+        }
+        return absoluteBasePath;
     }
 }
