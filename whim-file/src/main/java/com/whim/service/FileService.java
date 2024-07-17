@@ -5,6 +5,7 @@ import com.whim.entity.SysFile;
 import org.springframework.core.io.Resource;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 
 /**
@@ -34,10 +35,10 @@ public interface FileService extends IService<SysFile> {
     boolean deleteFile(Long fileId) throws IOException;
 
     /**
-     * 从本地存储中根据文件ID获取文件.
+     * 从本地存储中根据文件地址获取文件.
      *
-     * @param fileId 文件的ID
+     * @param filePath 文件地址
      * @return 代表文件的Resource
      */
-    Resource getFile(Long fileId);
+    Resource getFile(String filePath) throws Exception;
 }

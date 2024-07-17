@@ -1,5 +1,6 @@
 package com.whim.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.whim.common.exception.ServiceException;
 import com.whim.common.utils.FileUtils;
@@ -18,11 +19,12 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.MalformedURLException;
+import java.nio.file.AccessDeniedException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 
 /**
@@ -130,38 +132,41 @@ public class LocalFileServiceImpl extends ServiceImpl<SysFileMapper, SysFile> im
     }
 
     /**
-     * 从本地存储中根据文件ID获取文件.
+     * 从本地存储中根据文件地址获取文件.
      *
-     * @param fileId 文件的ID
+     * @param filePath 文件的地址
      * @return 代表文件的Resource
      */
     @Transactional(readOnly = true)
     @Override
-    public Resource getFile(Long fileId) {
-        SysFile sysFile = this.getById(fileId);
+    public Resource getFile(String filePath) throws Exception {
+        filePath = StringUtils.stripStart(filePath, "/");
+        LambdaQueryWrapper<SysFile> lambdaQueryWrapper = new LambdaQueryWrapper<>();
+        lambdaQueryWrapper.eq(SysFile::getPath, filePath);
+        SysFile sysFile = this.getOne(lambdaQueryWrapper);
         if (sysFile == null) {
-            throw new IllegalArgumentException("文件id不存在");
+            throw new FileNotFoundException("文件资源不存在");
         }
         try {
             // 确定文件的路径
-            Path filePath = Paths.get(StringUtils.prependIfMissing(this.basePath, "/")).toAbsolutePath().resolve(sysFile.getPath()).normalize();
+            Path path = FileUtils.generateAbsolutePath(this.basePath).resolve(sysFile.getPath()).normalize();
             // 检查文件是否存在且为常规文件
-            if (Files.exists(filePath) && Files.isRegularFile(filePath)) {
-                Resource resource = new UrlResource(filePath.toUri());
+            if (Files.exists(path) && Files.isRegularFile(path)) {
+                Resource resource = new UrlResource(path.toUri());
                 // 检查资源是否存在且可读
-                if (resource.exists() && resource.isReadable()) {
+                if (resource.isReadable()) {
                     return resource;
                 } else {
-                    throw new ServiceException("文件不可读或不存在");
+                    log.error("{} 文件不可读", path);
+                    throw new FileNotFoundException("文件资源不存在");
                 }
             } else {
-                throw new ServiceException("文件不存在");
+                throw new FileNotFoundException("文件资源不存在");
             }
         } catch (MalformedURLException e) {
-            log.error("检索文件时发生错误，fileId: {}", fileId, e);
+            log.error("检索文件时发生错误，fileId: {}", filePath, e);
             throw new ServiceException("服务器错误，请稍后重试。");
         }
     }
-//    public Resource getFile()
 }
 

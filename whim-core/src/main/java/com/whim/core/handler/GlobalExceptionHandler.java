@@ -19,6 +19,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import java.io.FileNotFoundException;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -30,13 +31,18 @@ import java.util.stream.Collectors;
 @RestControllerAdvice
 @Slf4j
 public class GlobalExceptionHandler {
-    // 兜底异常处理器
+    /**
+     * 兜底异常处理器
+     */
     @ExceptionHandler(Throwable.class)
     public Result<String> handleGeneralException(Throwable e) {
         log.error("Throwable异常:{}", e.getMessage());
         return Result.error(HttpStatus.INTERNAL_SERVER_ERROR, "服务器内部错误，请稍后再试");
     }
-    // 非法参数异常
+
+    /**
+     * 非法参数异常
+     */
     @ExceptionHandler(IllegalArgumentException.class)
     public Result<String> handleIllegalArgumentException(IllegalArgumentException e) {
         log.error("非法参数异常:{}", e.getMessage());
@@ -138,6 +144,15 @@ public class GlobalExceptionHandler {
      */
     @ExceptionHandler(UserNotFoundException.class)
     public Result<String> handleUserNotFoundException(UserNotFoundException exception) {
+        log.error(exception.getMessage());
+        return Result.error(HttpStatus.NOT_FOUND, exception.getMessage());
+    }
+
+    /**
+     * 资源不存在
+     */
+    @ExceptionHandler(FileNotFoundException.class)
+    public Result<String> handleFileNotFoundException(FileNotFoundException exception) {
         log.error(exception.getMessage());
         return Result.error(HttpStatus.NOT_FOUND, exception.getMessage());
     }
