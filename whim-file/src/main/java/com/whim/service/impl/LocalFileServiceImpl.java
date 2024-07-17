@@ -57,15 +57,7 @@ public class LocalFileServiceImpl extends ServiceImpl<SysFileMapper, SysFile> im
         }
         // 查看用户是否提供了的文件夹路径，如果提供了，查看前面是否有"/",确保上传文件一定是绝对路径
         String targetFolder = StringUtils.defaultIfEmpty(StringUtils.strip(folderName, "/"), "default");
-        Path absoluteBasePath;
-        if (System.getProperty("os.name").toLowerCase().contains("win") && this.basePath.matches("^[a-zA-Z]:.*")) {
-            // Windows 系统并且 basePath 是绝对路径
-            absoluteBasePath = Paths.get(this.basePath).toAbsolutePath().normalize();
-        } else {
-            // 非 Windows 系统或者 basePath 不是绝对路径
-            // 在basePath前加上"/"确保获取的是绝对路径
-            absoluteBasePath = Paths.get(StringUtils.prependIfMissing(this.basePath, "/")).toAbsolutePath().normalize();
-        }
+        Path absoluteBasePath = FileUtils.generateAbsolutePath(this.basePath);
         Path absolutePath = absoluteBasePath.resolve(targetFolder).normalize();
         // 创建文件夹
         Files.createDirectories(absolutePath);
@@ -86,6 +78,7 @@ public class LocalFileServiceImpl extends ServiceImpl<SysFileMapper, SysFile> im
                 log.error("保存到数据库中失败");
                 throw new ServiceException("服务器错误，请稍后重试。");
             }
+            // 将文件存储
             Files.copy(file.getInputStream(), targetLocation, StandardCopyOption.REPLACE_EXISTING);
             if (!Files.exists(targetLocation) || !Files.isRegularFile(targetLocation)) {
                 log.error("文件保存失败");
@@ -118,9 +111,7 @@ public class LocalFileServiceImpl extends ServiceImpl<SysFileMapper, SysFile> im
                 throw new ServiceException("服务器错误，请稍后重试。");
             }
             // 尝试删除文件
-            Path filePath = Paths.get(StringUtils.prependIfMissing(this.basePath, "/"))
-                    .toAbsolutePath()
-                    .resolve(sysFile.getPath()).normalize();
+            Path filePath = FileUtils.generateAbsolutePath(this.basePath).resolve(sysFile.getPath()).normalize();
             if (Files.exists(filePath)) {
                 try {
                     Files.delete(filePath);
@@ -171,5 +162,6 @@ public class LocalFileServiceImpl extends ServiceImpl<SysFileMapper, SysFile> im
             throw new ServiceException("服务器错误，请稍后重试。");
         }
     }
+//    public Resource getFile()
 }
 

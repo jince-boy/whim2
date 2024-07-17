@@ -47,7 +47,7 @@ public class TestController extends BaseController {
 
     @GetMapping
     @SaIgnore
-    public ResponseEntity<Resource> tests(@RequestParam("fileId") Long fileId) throws Exception {
+    public ResponseEntity<Resource> tests(Long fileId) throws Exception {
         return Result.file(fileService.getFile(fileId));
     }
 
