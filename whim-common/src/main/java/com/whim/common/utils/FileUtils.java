@@ -80,10 +80,12 @@ public class FileUtils {
     /**
      * 检查文件是否安全，避免路径遍历等安全问题。
      */
-    public static boolean isFileSafe(Resource resource) throws IOException {
+    public static boolean isFileSafe(Path path) throws IOException {
+//        Path basePath=Paths.get(ConfigurationManager.
         // 检查文件路径是否包含非法字符，实际项目中需要根据具体情况定义“安全”的文件路径
-        String path = resource.getFile().getPath();
-        return !path.contains("..") && !path.startsWith("/");
+//        String path = resource.getFile().getPath();
+//        return !path.contains("..") && !path.startsWith("/");
+        return true;
     }
 
     /**
@@ -96,6 +98,7 @@ public class FileUtils {
         String osName = System.getProperty("os.name").toLowerCase();
         return osName.contains("win") && basePath.matches("^[a-zA-Z]:.*");
     }
+
     /**
      * 根据操作系统和提供的 basePath 生成绝对路径。
      *

@@ -180,19 +180,12 @@ public class Result<T> implements Serializable {
      */
     public static ResponseEntity<Resource> file(Resource resource) throws IOException {
         try {
-            if (!FileUtils.isFileSafe(resource)) {
+            if (!FileUtils.isFileSafe(resource.getFile().toPath())) {
                 throw new IllegalArgumentException("文件路径不安全");
             }
             HttpHeaders headers = new HttpHeaders();
-            Path filePath;
-            String mimeType;
-            URI uri = resource.getURI();
-            if (uri.getScheme().equals("file") && uri.getPath().startsWith("/")) {
-                filePath = Path.of(uri.getPath().substring(1));
-            } else {
-                filePath = Path.of(uri);
-            }
-            mimeType = Files.probeContentType(filePath);
+            Path filePath = Path.of(resource.getURI());
+            String mimeType = Files.probeContentType(filePath);
             if (mimeType == null) {
                 mimeType = MimeTypeUtils.APPLICATION_OCTET_STREAM_VALUE;
             }
