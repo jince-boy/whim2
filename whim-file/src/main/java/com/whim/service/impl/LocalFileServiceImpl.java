@@ -11,6 +11,7 @@ import com.whim.mapper.SysFileMapper;
 import com.whim.service.FileService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
@@ -75,22 +76,23 @@ public class LocalFileServiceImpl extends ServiceImpl<SysFileMapper, SysFile> im
         sysFile.setFileType(file.getContentType());
         sysFile.setStorageType(StorageType.LOCAL.name());
         sysFile.setDescription(description);
+        if (fileMapper.insert(sysFile) <= 0) {
+            log.error("保存到数据库中失败");
+            throw new ServiceException("服务器错误，请稍后重试。");
+        }
         try {
-            if (fileMapper.insert(sysFile) <= 0) {
-                log.error("保存到数据库中失败");
-                throw new ServiceException("服务器错误，请稍后重试。");
-            }
             // 将文件存储
             Files.copy(file.getInputStream(), targetLocation, StandardCopyOption.REPLACE_EXISTING);
-            if (!Files.exists(targetLocation) || !Files.isRegularFile(targetLocation)) {
-                log.error("文件保存失败");
-                throw new ServiceException("服务器错误，请稍后重试。");
-            }
-            return sysFile;
         } catch (Exception e) {
             log.error("文件上传报错", e);
             throw new ServiceException("服务器错误，请稍后重试。");
         }
+        if (!Files.exists(targetLocation) || !Files.isRegularFile(targetLocation)) {
+            log.error("文件保存失败");
+            throw new ServiceException("服务器错误，请稍后重试。");
+        }
+        return sysFile;
+
     }
 
     /**
@@ -139,33 +141,30 @@ public class LocalFileServiceImpl extends ServiceImpl<SysFileMapper, SysFile> im
      */
     @Transactional(readOnly = true)
     @Override
-    public Resource getFile(String filePath) throws Exception {
+    public Resource getFile(String filePath) throws FileNotFoundException, MalformedURLException {
+        String message = "文件资源不存在";
         filePath = StringUtils.stripStart(filePath, "/");
-        LambdaQueryWrapper<SysFile> lambdaQueryWrapper = new LambdaQueryWrapper<>();
-        lambdaQueryWrapper.eq(SysFile::getPath, filePath);
-        SysFile sysFile = this.getOne(lambdaQueryWrapper);
+
+        SysFile sysFile = this.getOne(new LambdaQueryWrapper<SysFile>().eq(SysFile::getPath, filePath));
+
         if (sysFile == null) {
-            throw new FileNotFoundException("文件资源不存在");
+            throw new FileNotFoundException(message);
         }
-        try {
-            // 确定文件的路径
-            Path path = FileUtils.generateAbsolutePath(this.basePath).resolve(sysFile.getPath()).normalize();
-            // 检查文件是否存在且为常规文件
-            if (Files.exists(path) && Files.isRegularFile(path)) {
-                Resource resource = new UrlResource(path.toUri());
-                // 检查资源是否存在且可读
-                if (resource.isReadable()) {
-                    return resource;
-                } else {
-                    log.error("{} 文件不可读", path);
-                    throw new FileNotFoundException("文件资源不存在");
-                }
+        // 确定文件的路径
+        Path path = FileUtils.generateAbsolutePath(this.basePath).resolve(sysFile.getPath()).normalize();
+
+        // 检查文件是否存在且为常规文件
+        if (Files.exists(path) && Files.isRegularFile(path)) {
+            Resource resource = new UrlResource(path.toUri());
+            // 检查资源是否存在且可读
+            if (resource.isReadable()) {
+                return resource;
             } else {
-                throw new FileNotFoundException("文件资源不存在");
+                log.error("{} 文件不可读", path);
+                throw new FileNotFoundException(message);
             }
-        } catch (MalformedURLException e) {
-            log.error("检索文件时发生错误，fileId: {}", filePath, e);
-            throw new ServiceException("服务器错误，请稍后重试。");
+        } else {
+            throw new FileNotFoundException(message);
         }
     }
 }

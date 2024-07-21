@@ -180,9 +180,6 @@ public class Result<T> implements Serializable {
      */
     public static ResponseEntity<Resource> file(Resource resource) throws IOException {
         try {
-            if (!FileUtils.isFileSafe(resource.getFile().toPath())) {
-                throw new IllegalArgumentException("文件路径不安全");
-            }
             HttpHeaders headers = new HttpHeaders();
             Path filePath = Path.of(resource.getURI());
             String mimeType = Files.probeContentType(filePath);
@@ -196,7 +193,7 @@ public class Result<T> implements Serializable {
             return new ResponseEntity<>(resource, headers, HttpStatus.OK);
         } catch (Exception e) {
             log.error("控制器返回文件时发生错误", e);
-            throw new IOException("处理文件时，发生错误");
+            throw new IOException("返回文件时发生错误");
         }
     }
 

@@ -1,5 +1,6 @@
 package com.whim.common.utils;
 
+import com.whim.common.helper.SpringHelper;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.core.io.Resource;
 import org.springframework.web.multipart.MultipartFile;
@@ -75,17 +76,6 @@ public class FileUtils {
     public static boolean isEmpty(File file) {
         // 检查文件是否存在，是否是文件，以及长度是否为0
         return file == null || !file.exists() || !file.isFile() || file.length() == 0;
-    }
-
-    /**
-     * 检查文件是否安全，避免路径遍历等安全问题。
-     */
-    public static boolean isFileSafe(Path path) throws IOException {
-//        Path basePath=Paths.get(ConfigurationManager.
-        // 检查文件路径是否包含非法字符，实际项目中需要根据具体情况定义“安全”的文件路径
-//        String path = resource.getFile().getPath();
-//        return !path.contains("..") && !path.startsWith("/");
-        return true;
     }
 
     /**
