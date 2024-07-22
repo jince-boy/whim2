@@ -4,7 +4,6 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.whim.entity.SysFile;
 import com.whim.mapper.SysFileMapper;
 import com.whim.service.FileService;
-import com.whim.service.MinioFileService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -23,7 +22,7 @@ import java.io.IOException;
 @RequiredArgsConstructor
 @Slf4j
 @ConditionalOnProperty(name = "file.storage.type", havingValue = "minio")
-public class MinioFileServiceImpl extends ServiceImpl<SysFileMapper, SysFile> implements MinioFileService {
+public class MinioFileServiceImpl extends ServiceImpl<SysFileMapper, SysFile> implements FileService {
     @Override
     public SysFile uploadFile(MultipartFile file, String folderName, String description) throws Exception {
         return null;
@@ -37,10 +36,5 @@ public class MinioFileServiceImpl extends ServiceImpl<SysFileMapper, SysFile> im
     @Override
     public Resource getFile(String filePath) throws Exception {
         return null;
-    }
-
-    @Override
-    public void test() {
-        
     }
 }
