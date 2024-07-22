@@ -8,6 +8,5 @@ package com.whim.enums;
 public enum StorageType {
     LOCAL,
     MINIO,
-    OSS,
-    QINIU
+    OSS
 }

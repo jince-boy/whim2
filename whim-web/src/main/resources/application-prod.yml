@@ -92,6 +92,7 @@ sa-token:
 # 文件配置
 file:
   storage:
+    type: local
     local:
       path: whim/file
     minio:

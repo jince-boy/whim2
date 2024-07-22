@@ -11,8 +11,8 @@ import com.whim.mapper.SysFileMapper;
 import com.whim.service.FileService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Service;
@@ -23,7 +23,6 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.MalformedURLException;
-import java.nio.file.AccessDeniedException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
@@ -36,6 +35,7 @@ import java.nio.file.StandardCopyOption;
 @Service
 @RequiredArgsConstructor
 @Slf4j
+@ConditionalOnProperty(name = "file.storage.type", havingValue = "local")
 public class LocalFileServiceImpl extends ServiceImpl<SysFileMapper, SysFile> implements FileService {
     private final SysFileMapper fileMapper;
     // 本地上传目录
