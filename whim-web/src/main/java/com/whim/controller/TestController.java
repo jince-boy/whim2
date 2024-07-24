@@ -5,7 +5,6 @@ import cn.dev33.satoken.annotation.SaIgnore;
 import com.whim.common.base.BaseController;
 import com.whim.common.web.Result;
 import com.whim.entity.SysFile;
-import com.whim.service.FileService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.io.Resource;
@@ -32,24 +31,26 @@ import java.io.IOException;
 @Slf4j
 @RequiredArgsConstructor
 public class TestController extends BaseController {
-    private final FileService fileService;
 
     @PostMapping
     @SaIgnore
     public Result<SysFile> test(@RequestPart("file") MultipartFile file) throws Exception {
-        return Result.success("成功", fileService.uploadFile(file, "avatar", "测试一下"));
+//        return Result.success("成功", fileService.uploadFile(file, "avatar", "测试一下"));
+        return null;
     }
 
     @DeleteMapping
     @SaIgnore
     public Result<Boolean> test(@RequestParam("fileId") Long fileId) throws IOException {
-        return Result.success("删除成功", fileService.deleteFile(fileId));
+//        return Result.success("删除成功", fileService.deleteFile(fileId));
+        return null;
     }
 
     @GetMapping("/file/{*filePath}")
     @SaIgnore
     public ResponseEntity<Resource> tests(@PathVariable String filePath) throws Exception {
-        return Result.file(fileService.getFile(filePath));
+//        return Result.file(fileService.getFile(filePath));
+        return null;
     }
 
     @SaCheckPermission("sys:permission:add")

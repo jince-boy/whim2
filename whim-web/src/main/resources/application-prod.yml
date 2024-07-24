@@ -33,8 +33,8 @@ spring:
     redis:
       host: ${REDIS_HOST:127.0.0.1}
       port: ${REDIS_PORT:6379}
-      password:
-      database: 1
+      password: ${REDIS_PASSWD:}
+      database: ${REDIS_DB:1}
       jedis:
         pool:
           max-active: 8

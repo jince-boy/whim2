@@ -18,29 +18,6 @@ SET NAMES utf8mb4;
 SET FOREIGN_KEY_CHECKS = 0;
 
 -- ----------------------------
--- Table structure for sys_file
--- ----------------------------
-CREATE TABLE `sys_file`  (
-  `id` bigint(20) NOT NULL COMMENT '主键',
-  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '文件名称',
-  `path` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '文件地址',
-  `size` bigint(20) NOT NULL COMMENT '文件大小（字节）',
-  `extension` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '文件扩展名',
-  `file_type` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '文件的MIME类型（如image/png, application/pdf）',
-  `storage_type` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '存储类型（如local, minio）',
-  `description` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL COMMENT '文件描述',
-  `create_time` datetime NULL DEFAULT NULL COMMENT '创建时间',
-  `update_time` datetime NULL DEFAULT NULL COMMENT '修改时间',
-  PRIMARY KEY (`id`) USING BTREE,
-  INDEX `name`(`name` ASC) USING BTREE COMMENT '文件名称',
-  INDEX `storage_type`(`storage_type` ASC) USING BTREE COMMENT '文件存储类型'
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci COMMENT = '系统文件' ROW_FORMAT = Dynamic;
-
--- ----------------------------
--- Records of sys_file
--- ----------------------------
-
--- ----------------------------
 -- Table structure for sys_permission
 -- ----------------------------
 CREATE TABLE `sys_permission`  (
