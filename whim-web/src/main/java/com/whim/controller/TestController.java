@@ -4,7 +4,7 @@ import cn.dev33.satoken.annotation.SaCheckPermission;
 import cn.dev33.satoken.annotation.SaIgnore;
 import com.whim.common.base.BaseController;
 import com.whim.common.web.Result;
-import com.whim.entity.SysFile;
+import com.whim.service.FileStorageService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.io.Resource;
@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -31,11 +30,13 @@ import java.io.IOException;
 @Slf4j
 @RequiredArgsConstructor
 public class TestController extends BaseController {
+    private final FileStorageService fileStorageService;
+
 
     @PostMapping
     @SaIgnore
-    public Result<SysFile> test(@RequestPart("file") MultipartFile file) throws Exception {
-//        return Result.success("成功", fileService.uploadFile(file, "avatar", "测试一下"));
+    public Result<Void> test(@RequestParam("file") MultipartFile file) throws Exception {
+//        fileStorageService.file(file).;
         return null;
     }
 
