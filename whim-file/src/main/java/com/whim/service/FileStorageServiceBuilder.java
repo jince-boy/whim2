@@ -22,7 +22,7 @@ public class FileStorageServiceBuilder {
         return this;
     }
 
-    public FileStorageServiceBuilder addFileWrapperAdapter() {
+    public FileStorageServiceBuilder addFileWrapperAdapter(FileWrapperAdapter adapter) {
         this.fileWrapperAdapters.add(null);
         return this;
     }
