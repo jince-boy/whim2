@@ -36,7 +36,8 @@ public class TestController extends BaseController {
     @PostMapping
     @SaIgnore
     public Result<Void> test(@RequestParam("file") MultipartFile file) throws Exception {
-//        fileStorageService.file(file).;
+        fileStorageService.createFileUploadHandler(file)
+                .upload();
         return null;
     }
 

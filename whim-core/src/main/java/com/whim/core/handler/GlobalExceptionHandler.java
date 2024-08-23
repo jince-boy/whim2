@@ -3,6 +3,7 @@ package com.whim.core.handler;
 import cn.dev33.satoken.exception.NotLoginException;
 import cn.dev33.satoken.exception.NotPermissionException;
 import com.whim.common.exception.CheckCaptchaException;
+import com.whim.common.exception.FileStorageException;
 import com.whim.common.exception.ServiceException;
 import com.whim.common.exception.UserNotFoundException;
 import com.whim.common.exception.UserPasswordNotMatchException;
@@ -155,5 +156,14 @@ public class GlobalExceptionHandler {
     public Result<String> handleFileNotFoundException(FileNotFoundException exception) {
         log.error(exception.getMessage());
         return Result.error(HttpStatus.NOT_FOUND, exception.getMessage());
+    }
+
+    /**
+     * 文件存储异常
+     */
+    @ExceptionHandler(FileStorageException.class)
+    public Result<String> handleFileStorageException(FileStorageException exception) {
+        log.error(exception.getMessage());
+        return Result.error(HttpStatus.INTERNAL_SERVER_ERROR, exception.getMessage());
     }
 }

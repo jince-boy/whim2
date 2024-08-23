@@ -51,8 +51,7 @@ public class DateUtils {
             sdf.setLenient(false);
             return sdf.parse(date);
         } catch (Exception e) {
-            throw new IllegalArgumentException("Failed to parse " + date
-                    + " by pattern: " + pattern, e);
+            throw new IllegalArgumentException(date + "无法按模式解析: " + pattern, e);
         }
     }
 

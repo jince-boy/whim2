@@ -13,7 +13,7 @@ import org.springframework.core.Ordered;
  * description:过滤器配置类
  */
 @Configuration
-public class FilterConfig {
+public class FilterConfiguration {
     /**
      * 全局请求过滤器
      */

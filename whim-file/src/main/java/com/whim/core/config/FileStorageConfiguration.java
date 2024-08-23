@@ -1,7 +1,8 @@
-package com.whim.config;
+package com.whim.core.config;
 
+import com.whim.core.adapter.MultipartFileAdapter;
+import com.whim.core.builder.FileStorageServiceBuilder;
 import com.whim.service.FileStorageService;
-import com.whim.service.FileStorageServiceBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -14,6 +15,9 @@ import org.springframework.context.annotation.Configuration;
 public class FileStorageConfiguration {
     @Bean
     public FileStorageService createFileStorageService() {
-        return new FileStorageServiceBuilder().create().addFileWrapperAdapter().build();
+        return new FileStorageServiceBuilder()
+                .create()
+                .addFileWrapperAdapter(new MultipartFileAdapter())
+                .build();
     }
 }

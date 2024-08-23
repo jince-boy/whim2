@@ -1,4 +1,4 @@
-package com.whim.service;
+package com.whim.core.storage;
 
 /**
  * @author jince

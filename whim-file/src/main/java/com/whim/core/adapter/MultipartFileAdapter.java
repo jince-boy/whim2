@@ -1,6 +1,7 @@
-package com.whim.adapter;
+package com.whim.core.adapter;
 
-import com.whim.adapter.wrapper.FileWrapper;
+import com.whim.core.wrapper.FileWrapper;
+import com.whim.core.wrapper.MultipartFileWrapper;
 import org.springframework.web.multipart.MultipartFile;
 
 /**
@@ -8,15 +9,14 @@ import org.springframework.web.multipart.MultipartFile;
  * date: 2024/8/22 上午11:38
  * description:Multipart File 包装适配器
  */
-public class MultipartFileWrapperAdapter implements FileWrapperAdapter {
+public class MultipartFileAdapter implements FileAdapter {
     @Override
     public boolean isSupport(Object file) {
         return file instanceof MultipartFile;
     }
 
-    @Override
-    public FileWrapper wrap(Object file) {
+    public FileWrapper getFileWrapper(Object file) {
         MultipartFile multipartFile = (MultipartFile) file;
-
+        return new MultipartFileWrapper(multipartFile);
     }
 }
