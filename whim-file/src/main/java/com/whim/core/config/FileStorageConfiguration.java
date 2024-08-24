@@ -1,8 +1,8 @@
 package com.whim.core.config;
 
-import com.whim.core.adapter.MultipartFileAdapter;
 import com.whim.core.builder.FileStorageServiceBuilder;
 import com.whim.service.FileStorageService;
+import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -12,12 +12,13 @@ import org.springframework.context.annotation.Configuration;
  * description: 文件存储配置
  */
 @Configuration
+@AllArgsConstructor
 public class FileStorageConfiguration {
+    private final FileStorageProperties fileStorageProperties;
+
     @Bean
     public FileStorageService createFileStorageService() {
-        return new FileStorageServiceBuilder()
-                .create()
-                .addFileWrapperAdapter(new MultipartFileAdapter())
+        return new FileStorageServiceBuilder(fileStorageProperties)
                 .build();
     }
 }
