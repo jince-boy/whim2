@@ -4,14 +4,15 @@ import com.whim.common.exception.FileStorageException;
 import com.whim.core.adapter.FileAdapter;
 import com.whim.core.config.FileStorageProperties;
 import com.whim.core.handler.FileUploadHandler;
-import com.whim.core.storage.FileInfo;
 import com.whim.core.storage.FileStorage;
 import com.whim.core.wrapper.FileWrapper;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.Map;
 import java.util.Objects;
-import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
  * @author jince
@@ -20,10 +21,11 @@ import java.util.concurrent.CopyOnWriteArrayList;
  */
 @Slf4j
 @AllArgsConstructor
+@Service
 public class FileStorageService {
     private final FileStorageProperties fileStorageProperties;
-    private final CopyOnWriteArrayList<FileAdapter> fileAdapter;
-    private final CopyOnWriteArrayList<FileStorage> fileStorage;
+    private final List<FileAdapter> fileAdapter;
+    private final Map<String,FileStorage> fileStorage;
 
     /**
      * 创建文件上传处理器
@@ -37,10 +39,6 @@ public class FileStorageService {
             throw new FileStorageException("不支持的文件类型");
         }
         return new FileUploadHandler(fileStorageProperties, fileStorage).setFileWrapper(fileWrapper);
-    }
-
-    public FileUploadHandler createFileHandler(FileInfo fileInfo) {
-        return new FileUploadHandler(null, null);
     }
 
     /**

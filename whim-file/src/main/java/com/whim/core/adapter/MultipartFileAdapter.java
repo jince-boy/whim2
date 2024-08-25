@@ -2,6 +2,7 @@ package com.whim.core.adapter;
 
 import com.whim.core.wrapper.FileWrapper;
 import com.whim.core.wrapper.MultipartFileWrapper;
+import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
 /**
@@ -9,6 +10,7 @@ import org.springframework.web.multipart.MultipartFile;
  * date: 2024/8/22 上午11:38
  * description:Multipart File 包装适配器
  */
+@Component
 public class MultipartFileAdapter implements FileAdapter {
     @Override
     public boolean isSupport(Object file) {

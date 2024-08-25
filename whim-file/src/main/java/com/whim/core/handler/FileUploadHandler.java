@@ -6,7 +6,7 @@ import com.whim.core.wrapper.FileWrapper;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.IOException;
-import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.Map;
 
 /**
  * @author Jince
@@ -16,11 +16,11 @@ import java.util.concurrent.CopyOnWriteArrayList;
 @Slf4j
 public class FileUploadHandler {
     private final FileStorageProperties fileStorageProperties;
-    private final CopyOnWriteArrayList<FileStorage> fileStorage;
+    private final Map<String, FileStorage> fileStorage;
     private FileWrapper fileWrapper;
 
 
-    public FileUploadHandler(FileStorageProperties fileStorageProperties, CopyOnWriteArrayList<FileStorage> fileStorage) {
+    public FileUploadHandler(FileStorageProperties fileStorageProperties, Map<String, FileStorage> fileStorage) {
         this.fileStorageProperties = fileStorageProperties;
         this.fileStorage = fileStorage;
     }
@@ -31,8 +31,9 @@ public class FileUploadHandler {
     }
 
     public FileUploadHandler upload() throws IOException {
-        log.info(fileStorageProperties.getOtherStorage().get("minio").toString());
-        log.info(fileStorage.toString());
+        log.info(fileStorageProperties.toString());
+        log.info(fileStorage.get("minio").toString());
+        log.info(fileWrapper.toString());
         return this;
     }
 

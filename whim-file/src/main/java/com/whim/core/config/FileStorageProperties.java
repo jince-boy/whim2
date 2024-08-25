@@ -1,5 +1,6 @@
 package com.whim.core.config;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
@@ -20,24 +21,26 @@ public class FileStorageProperties {
     /**
      * 默认存储平台
      */
-    private String defaultStorage;
+    private String defaultStorage = "local";
 
     /**
      * 缩略图后缀
      */
-    private String thumbnailSuffix;
+    private String thumbnailSuffix = ".min.jpg";
 
     /**
      * 本地存储的配置
      */
-    private LocalStorageProperties local;
+    private LocalStorageProperties local = new LocalStorageProperties("whim/file", "/file/**");
 
     /**
      * 其他存储平台的配置 (例如: minio, oss 等，每个平台可以有多个配置实例)
      */
     private Map<String, List<OtherStorageProperties>> otherStorage;
 
+
     @Data
+    @AllArgsConstructor
     public static class LocalStorageProperties {
         private String storagePath;
         private String accessPath;

@@ -98,22 +98,22 @@ file:
     local:
       storage-path: whim/file
       access-path: /file/**
-    other-storage:
-      minio:
-        - domain: http://localhost:9000
-          access-key: admin
-          secret-key: 123456789
-          bucket-names:
-            - test-bucket-1
-            - test-bucket-2
-        - domain: http://localhost:9001
-          access-key: admin2
-          secret-key: 987654321
-          bucket-names:
-            - another-bucket
-      oss:
-        - domain: http://localhost:9002
-          access-key: admin
-          secret-key: 123456789
-          bucket-names:
-            - test-bucket-oss
+#    other-storage:
+#      minio:
+#        - domain: http://localhost:9000
+#          access-key: admin
+#          secret-key: 123456789
+#          bucket-names:
+#            - test-bucket-1
+#            - test-bucket-2
+#        - domain: http://localhost:9001
+#          access-key: admin2
+#          secret-key: 987654321
+#          bucket-names:
+#            - another-bucket
+#      oss:
+#        - domain: http://localhost:9002
+#          access-key: admin
+#          secret-key: 123456789
+#          bucket-names:
+#            - test-bucket-oss
