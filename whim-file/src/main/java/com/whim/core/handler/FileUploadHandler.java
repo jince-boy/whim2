@@ -1,5 +1,6 @@
 package com.whim.core.handler;
 
+import com.whim.common.exception.FileStorageException;
 import com.whim.core.config.FileStorageProperties;
 import com.whim.core.storage.FileStorage;
 import com.whim.core.wrapper.FileWrapper;
@@ -7,6 +8,7 @@ import lombok.extern.slf4j.Slf4j;
 
 import java.io.IOException;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * @author Jince
@@ -15,14 +17,28 @@ import java.util.Map;
  */
 @Slf4j
 public class FileUploadHandler {
+    /**
+     * 文件存储配置
+     */
     private final FileStorageProperties fileStorageProperties;
+    /**
+     * 文件存储方式
+     */
     private final Map<String, FileStorage> fileStorage;
+    /**
+     * 当前文件包装类
+     */
     private FileWrapper fileWrapper;
+    /**
+     * 当前存储方式
+     */
+    private FileStorage storage;
 
 
     public FileUploadHandler(FileStorageProperties fileStorageProperties, Map<String, FileStorage> fileStorage) {
         this.fileStorageProperties = fileStorageProperties;
         this.fileStorage = fileStorage;
+        this.storage = fileStorage.get(fileStorageProperties.getDefaultStorage());
     }
 
     public FileUploadHandler setFileWrapper(FileWrapper fileWrapper) {
@@ -31,10 +47,40 @@ public class FileUploadHandler {
     }
 
     public FileUploadHandler upload() throws IOException {
-        log.info(fileStorageProperties.toString());
-        log.info(fileStorage.get("minio").toString());
-        log.info(fileWrapper.toString());
+        this.storage.upload();
         return this;
+    }
+
+    /**
+     * 设置上传路径
+     *
+     * @param path
+     */
+    public void setPath(String path) {
+
+    }
+
+    /**
+     * 设置上传方式
+     *
+     * @param storageName 存储方式名称
+     */
+    public FileUploadHandler setStorage(String storageName) {
+        FileStorage storage = fileStorage.get(storageName);
+        if (Objects.isNull(storage)) {
+            throw new FileStorageException("文件存储方式不存在");
+        }
+        this.storage = storage;
+        return this;
+    }
+
+    /**
+     * 设置文件上传名称
+     *
+     * @param fileName
+     */
+    public void setFileName(String fileName) {
+
     }
 
 }

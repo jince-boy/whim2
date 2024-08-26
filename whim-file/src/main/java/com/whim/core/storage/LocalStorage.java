@@ -10,6 +10,11 @@ import org.springframework.stereotype.Component;
 @Component("local")
 public class LocalStorage implements FileStorage {
     @Override
+    public FileInfo upload() {
+        return null;
+    }
+
+    @Override
     public void close() throws Exception {
 
     }

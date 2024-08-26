@@ -6,5 +6,5 @@ package com.whim.core.storage;
  * description: 文件存储接口
  */
 public interface FileStorage extends AutoCloseable {
-
+    public FileInfo upload();
 }

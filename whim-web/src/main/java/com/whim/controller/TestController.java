@@ -38,7 +38,6 @@ public class TestController extends BaseController {
     public Result<Void> test(@RequestParam("file") MultipartFile file) throws Exception {
         fileStorageService.createFileUploadHandler(file)
                 .upload();
-//        fileStorageService.
         return null;
     }
 
