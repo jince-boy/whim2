@@ -4,6 +4,7 @@ import cn.dev33.satoken.annotation.SaCheckPermission;
 import cn.dev33.satoken.annotation.SaIgnore;
 import com.whim.common.base.BaseController;
 import com.whim.common.web.Result;
+import com.whim.core.storage.FileInfo;
 import com.whim.service.FileStorageService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -35,10 +36,12 @@ public class TestController extends BaseController {
 
     @PostMapping
     @SaIgnore
-    public Result<Void> test(@RequestParam("file") MultipartFile file) throws Exception {
-        fileStorageService.createFileUploadHandler(file)
+    public Result<FileInfo> test(@RequestParam("file") MultipartFile file) throws Exception {
+        FileInfo fileInfo = fileStorageService.createFileUploadHandler(file)
+                .setFileName("123123")
+                .setPath("/test")
                 .upload();
-        return null;
+        return Result.success("上传成功", fileInfo);
     }
 
     @DeleteMapping

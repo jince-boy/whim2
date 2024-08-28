@@ -1,7 +1,9 @@
 package com.whim.core.handler;
 
 import com.whim.common.exception.FileStorageException;
+import com.whim.common.utils.FileUtils;
 import com.whim.core.config.FileStorageProperties;
+import com.whim.core.storage.FileInfo;
 import com.whim.core.storage.FileStorage;
 import com.whim.core.wrapper.FileWrapper;
 import lombok.extern.slf4j.Slf4j;
@@ -34,31 +36,66 @@ public class FileUploadHandler {
      */
     private FileStorage storage;
 
+    /**
+     * 文件信息
+     */
+    private FileInfo fileInfo;
 
+    /**
+     * 构造方法
+     */
     public FileUploadHandler(FileStorageProperties fileStorageProperties, Map<String, FileStorage> fileStorage) {
         this.fileStorageProperties = fileStorageProperties;
         this.fileStorage = fileStorage;
         this.storage = fileStorage.get(fileStorageProperties.getDefaultStorage());
+        this.fileInfo = new FileInfo();
     }
 
+    /**
+     * 设置文件包装类
+     *
+     * @param fileWrapper 文件包装类
+     * @return FileUploadHandler
+     */
     public FileUploadHandler setFileWrapper(FileWrapper fileWrapper) {
         this.fileWrapper = fileWrapper;
         return this;
     }
 
-    public FileUploadHandler upload() throws IOException {
-        this.storage.upload();
-        return this;
+    /**
+     * 上传文件
+     *
+     * @return FileUploadHandler
+     * @throws IOException IOException
+     */
+    public FileInfo upload() throws IOException {
+        return this.storage.upload(this.fileWrapper, this.fileInfo);
     }
 
     /**
      * 设置上传路径
      *
-     * @param path
+     * @param path 路径
      */
-    public void setPath(String path) {
-
+    public FileUploadHandler setPath(String path) {
+        this.fileInfo.setPath(path);
+        return this;
     }
+
+    /**
+     * 设置文件上传名称
+     *
+     * @param fileName 文件名称
+     */
+    public FileUploadHandler setFileName(String fileName) {
+        if (FileUtils.isValidFilename(fileName)) {
+            this.fileInfo.setFileName(fileName);
+        } else {
+            throw new FileStorageException("文件名称不合法");
+        }
+        return this;
+    }
+
 
     /**
      * 设置上传方式
@@ -72,15 +109,6 @@ public class FileUploadHandler {
         }
         this.storage = storage;
         return this;
-    }
-
-    /**
-     * 设置文件上传名称
-     *
-     * @param fileName
-     */
-    public void setFileName(String fileName) {
-
     }
 
 }

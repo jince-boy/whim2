@@ -68,6 +68,23 @@ public class FileUtils {
     }
 
     /**
+     * 获取文件名称 不包含扩展名
+     *
+     * @param originalFilename 原始文件名称
+     * @return 文件名称不包含扩展名
+     */
+    public static String getFileName(String originalFilename) {
+        if (originalFilename == null || originalFilename.isEmpty()) {
+            return originalFilename;
+        }
+        int lastDotIndex = originalFilename.lastIndexOf('.');
+        if (lastDotIndex == -1) {
+            return originalFilename; // 没有扩展名
+        }
+        return originalFilename.substring(0, lastDotIndex);
+    }
+
+    /**
      * 检查文件是否为空
      *
      * @param file 要检查的文件

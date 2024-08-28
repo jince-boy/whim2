@@ -9,6 +9,12 @@ import java.io.InputStream;
  * description: 文件包装类接口
  */
 public interface FileWrapper {
+    String getName();
+
+    String getContentType();
+
+    Long getSize();
+
     /**
      * 获取文件输入流
      *
