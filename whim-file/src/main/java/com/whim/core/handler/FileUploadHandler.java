@@ -69,7 +69,11 @@ public class FileUploadHandler {
      * @throws IOException IOException
      */
     public FileInfo upload() throws IOException {
-        return this.storage.upload(this.fileWrapper, this.fileInfo);
+
+        if (this.storage.upload(fileWrapper, fileInfo)) {
+
+        }
+        return null;
     }
 
     /**

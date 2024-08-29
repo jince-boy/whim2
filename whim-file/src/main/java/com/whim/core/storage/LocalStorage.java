@@ -11,7 +11,6 @@ import org.springframework.stereotype.Component;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 
 /**
@@ -26,36 +25,25 @@ public class LocalStorage implements FileStorage {
     private final FileStorageProperties fileStorageProperties;
 
     @Override
-    public FileInfo upload(FileWrapper fileWrapper, FileInfo fileInfo) {
+    public Boolean upload(FileWrapper fileWrapper, FileInfo fileInfo) throws IOException {
         // 基础路径
         Path basePath = FileUtils.generateAbsolutePath(fileStorageProperties.getLocal().getStoragePath());
         // 上传路径
         String uploadPath = StringUtils.defaultIfEmpty(StringUtils.strip(fileInfo.getPath(), "/"), "");
+        // 完整路径
+        Path fullUploadPath = basePath.resolve(uploadPath).normalize();
+        // 创建完整路径
+        Files.createDirectories(fullUploadPath);
         // 文件名称
         String fileName = StringUtils.isEmpty(fileInfo.getFileName()) ? FileUtils.getFileName(fileWrapper.getName()) : fileInfo.getFileName();
         // 扩展名
         String extension = FileUtils.getExtension(fileWrapper.getName());
-        // 完整的上传绝对路径
-        Path fullUploadPath = basePath.resolve(uploadPath).resolve(fileName + "." + extension).normalize();
+        // 完整的文件上传绝对路径
+        Path filePath = fullUploadPath.resolve(fileName + "." + extension).normalize();
+        // 将文件存储
+        Files.copy(fileWrapper.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
 
-
-
-        log.info(fullUploadPath.toString());
-        return fileInfo;
-//        Path destinationPath = Paths.get(fileInfo.getPath(), fileInfo.getFileName());
-//        try {
-//            // 利用 Files.copy 进行文件复制
-//            Files.copy(fileWrapper.getInputStream(), destinationPath, StandardCopyOption.REPLACE_EXISTING);
-//
-//            log.info("File uploaded successfully: {}", destinationPath.toAbsolutePath());
-//            // 更新 fileInfo 的路径信息
-//            fileInfo.setPath(destinationPath.toAbsolutePath().toString());
-//            return fileInfo;
-//
-//        } catch (IOException e) {
-//            log.error("Error uploading file", e);
-//            throw new RuntimeException("File upload failed", e);
-//        }
+        return true;
     }
 
     @Override
