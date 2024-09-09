@@ -1,12 +1,16 @@
 package com.whim.core.storage;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
+
+import java.time.LocalDateTime;
 
 /**
  * @author Jince
  * date: 2024/8/24 下午10:10
  * description: 文件信息
  */
+
 @Data
 public class FileInfo {
     /**
@@ -36,7 +40,8 @@ public class FileInfo {
     /**
      * 创建时间
      */
-    private String createTime;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private LocalDateTime createTime;
     /**
      * 存储平台
      */

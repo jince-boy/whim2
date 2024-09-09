@@ -36,10 +36,10 @@ public class TestController extends BaseController {
 
     @PostMapping
     @SaIgnore
-    public Result<FileInfo> test(@RequestParam("file") MultipartFile file) throws Exception {
+    public Result<FileInfo> test(@RequestParam("file") MultipartFile file, String name, String path) throws Exception {
         FileInfo fileInfo = fileStorageService.createFileUploadHandler(file)
-                .setFileName("123123")
-                .setPath("/test")
+                .setFileName(name)
+                .setPath(path)
                 .upload();
         return Result.success("上传成功", fileInfo);
     }

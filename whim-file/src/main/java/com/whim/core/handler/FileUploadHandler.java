@@ -71,9 +71,9 @@ public class FileUploadHandler {
     public FileInfo upload() throws IOException {
 
         if (this.storage.upload(fileWrapper, fileInfo)) {
-
+            log.info(fileInfo.toString());
         }
-        return null;
+        return fileInfo;
     }
 
     /**

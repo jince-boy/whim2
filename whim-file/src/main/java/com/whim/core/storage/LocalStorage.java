@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
+import java.time.LocalDateTime;
 
 /**
  * @author jince
@@ -43,6 +44,8 @@ public class LocalStorage implements FileStorage {
         // 将文件存储
         Files.copy(fileWrapper.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
 
+        // 文件存储成功后，设置FileInfo的属性
+        fileInfo.setCreateTime(LocalDateTime.now());
         return true;
     }
 
